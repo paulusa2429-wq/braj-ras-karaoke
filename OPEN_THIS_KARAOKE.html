@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v274-20260711160834</title>
+<html><head><meta charset="UTF-8"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v275-20260711165210</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <style>
@@ -35,10 +37,13 @@ audio{width:min(900px,100%);margin:10px 0}
 #pickBar .btn{min-width:140px}
 #pickBar .btn.on{outline:2px solid #fff;box-shadow:0 0 12px #ffd70088}
 #time{color:#999;font-size:0.85rem;margin-top:8px}
+#keepAwake{position:fixed;width:2px;height:2px;opacity:0.01;pointer-events:none;bottom:0;left:0;z-index:-1}
 </style></head><body>
+<video id="keepAwake" playsinline webkit-playsinline loop muted preload="auto" disablePictureInPicture></video>
+
 <h1>Braj Ras — Word Karaoke</h1>
 <div id="ver"></div>
-<p class="note">v274 · Tune → Radha → Jaap lyrics → Karaoke
+<p class="note">v275 · Tune → Radha → Jaap lyrics → Karaoke
 <div id="pickBar">
   <button class="btn" id="btnPart1" type="button">▶ 1 · Flute Tune (3:20)</button>
   <button class="btn" id="btnPart2" type="button">▶ 2 · Radha Naam He Gana hai</button>
@@ -46,24 +51,24 @@ audio{width:min(900px,100%);margin:10px 0}
   <button class="btn" id="btnPart4" type="button">▶ 4 · Karaoke</button>
   <button class="btn ghost" id="startBtn" type="button">▶ Start All</button>
 </div>
-<p class="note" style="margin:0">Har button alag · Start All = 1→2→3→4
+<p class="note" style="margin:0">Har button alag · Start All = 1→2→3→4 · Phone pe screen on rahega jab tak play ho
 <div id="fluteWrap">
-  <audio id="flute" controls src="flute_tune_0_250.mp3"></audio>
+  <audio id="flute" controls playsinline webkit-playsinline preload="auto" src="flute_tune_0_250.mp3"></audio>
   <div id="fluteLyrics"><span style="color:#888;font-size:1.2rem">♪ tune ♪</span></div>
   <p class="note" style="margin:0">First 3:20 · <a href="https://www.youtube.com/watch?v=j2vjmSzkqdU" target="_blank" rel="noopener" style="color:#ffd700">YouTube</a></p>
 </div>
 <div id="firstWrap">
-  <audio id="first" controls src="intro_reel_first_instrumental.mp3"></audio>
+  <audio id="first" controls playsinline webkit-playsinline preload="auto" src="intro_reel_first_instrumental.mp3"></audio>
   <div id="firstLyrics">▶ 2 · Radha Naam He Gana hai</div>
   <p class="note" style="margin:0"><a href="https://www.facebook.com/reel/1509110300621446" target="_blank" rel="noopener" style="color:#ffd700">source reel</a></p>
 </div>
 <div id="jaapWrap">
   <div id="jaapLyrics"><span class="w next">Radha</span> <span class="w next">Radha</span> <span class="w next">Radha</span> <span class="w next">Radha</span></div>
-  <audio id="jaap" controls src="radha_naam_jaap_10min.mp3"></audio>
+  <audio id="jaap" controls playsinline webkit-playsinline preload="auto" src="radha_naam_jaap_10min.mp3"></audio>
   <p class="note" style="margin:0">Lyrics upar · vocals REMOVED from 0:11 · beats kept · <a href="https://www.youtube.com/watch?v=0LhTJgJyfM4" target="_blank" rel="noopener" style="color:#ffd700">YouTube</a></p>
 </div>
 <div id="karaokeWrap" class="hide">
-<audio id="audio" controls src="Braj_Ras_from_311_instrumental.mp3"></audio>
+<audio id="audio" controls playsinline webkit-playsinline preload="auto" src="Braj_Ras_from_311_instrumental.mp3"></audio>
 <div id="lyrics">▶ Play</div>
 <div id="time"></div>
 </div>
@@ -408,7 +413,75 @@ a.addEventListener('seeked',tick);
 a.addEventListener('play',()=>{ cancelAnimationFrame(rafId); rafLoop(); });
 a.addEventListener('pause',()=>cancelAnimationFrame(rafId));
 a.addEventListener('ended',()=>cancelAnimationFrame(rafId));
-document.getElementById('ver').textContent='v274 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 16:08:34';
+
+/* iPhone: screen black / auto-lock band — Wake Lock + tiny looping video */
+let wakeLock=null;
+let keepWanted=false;
+const keepVid=document.getElementById('keepAwake');
+// Tiny silent MP4 (NoSleep-style) — keeps iOS from sleeping while "media" plays
+(function(){
+  if(!keepVid) return;
+  // 0.1s black silent mp4
+  keepVid.src='data:video/mp4;base64,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';
+})();
+async function requestWake(){
+  keepWanted=true;
+  try{
+    if(navigator.wakeLock && navigator.wakeLock.request){
+      wakeLock=await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release',()=>{ wakeLock=null; });
+    }
+  }catch(e){}
+  try{
+    if(keepVid){
+      keepVid.muted=true;
+      const p=keepVid.play();
+      if(p&&p.catch) p.catch(()=>{});
+    }
+  }catch(e){}
+}
+function releaseWake(){
+  keepWanted=false;
+  try{ if(wakeLock){ wakeLock.release(); wakeLock=null; } }catch(e){}
+  try{ if(keepVid) keepVid.pause(); }catch(e){}
+}
+function anyAudioPlaying(){
+  return [flute,first,jaap,a].some(el=>el && !el.paused && !el.ended);
+}
+function wireKeepAwake(el){
+  if(!el) return;
+  el.addEventListener('play',()=>{ requestWake(); });
+  el.addEventListener('playing',()=>{ requestWake(); });
+  el.addEventListener('pause',()=>{ if(!anyAudioPlaying()) releaseWake(); });
+  el.addEventListener('ended',()=>{ if(!anyAudioPlaying()) releaseWake(); });
+}
+[flute,first,jaap,a].forEach(wireKeepAwake);
+document.addEventListener('visibilitychange',async()=>{
+  if(document.visibilityState==='visible' && keepWanted){
+    await requestWake();
+    // agar iOS ne audio pause kar diya ho to resume
+    [flute,first,jaap,a].forEach(el=>{
+      if(!el) return;
+      if(el.dataset.wasPlaying==='1' && el.paused){
+        el.play().catch(()=>{});
+      }
+    });
+  } else if(document.visibilityState==='hidden'){
+    [flute,first,jaap,a].forEach(el=>{
+      if(el) el.dataset.wasPlaying=(!el.paused && !el.ended)?'1':'0';
+    });
+  }
+});
+// Soft keep-alive every 20s while playing (helps some iOS versions)
+setInterval(()=>{
+  if(!anyAudioPlaying()) return;
+  requestWake();
+  try{
+    if(keepVid && keepVid.paused) keepVid.play().catch(()=>{});
+  }catch(e){}
+},20000);
+
+document.getElementById('ver').textContent='v275 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 16:52:10';
 tick();
 (function(){
   const j=cues.find(x=>9>=x.start&&9<=x.end);
