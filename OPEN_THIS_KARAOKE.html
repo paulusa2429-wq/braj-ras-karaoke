@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v272-20260711155903</title>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v273-20260711160637</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <style>
@@ -38,7 +38,7 @@ audio{width:min(900px,100%);margin:10px 0}
 </style></head><body>
 <h1>Braj Ras — Word Karaoke</h1>
 <div id="ver"></div>
-<p class="note">v272 · Tune → Radha → Jaap lyrics → Karaoke
+<p class="note">v273 · Tune → Radha → Jaap lyrics → Karaoke
 <div id="pickBar">
   <button class="btn" id="btnPart1" type="button">▶ 1 · Flute Tune (3:20)</button>
   <button class="btn" id="btnPart2" type="button">▶ 2 · Radha Naam He Gana hai</button>
@@ -60,7 +60,7 @@ audio{width:min(900px,100%);margin:10px 0}
 <div id="jaapWrap">
   <div id="jaapLyrics"><span class="w next">Radha</span> <span class="w next">Radha</span> <span class="w next">Radha</span> <span class="w next">Radha</span></div>
   <audio id="jaap" controls src="radha_naam_jaap_10min.mp3"></audio>
-  <p class="note" style="margin:0">Lyrics upar · vocals off from 0:11 · keep 0:00–4:51 · <a href="https://www.youtube.com/watch?v=0LhTJgJyfM4" target="_blank" rel="noopener" style="color:#ffd700">YouTube</a></p>
+  <p class="note" style="margin:0">Lyrics upar · HQ beats · vocals soft-off from 0:11 · <a href="https://www.youtube.com/watch?v=0LhTJgJyfM4" target="_blank" rel="noopener" style="color:#ffd700">YouTube</a></p>
 </div>
 <div id="karaokeWrap" class="hide">
 <audio id="audio" controls src="Braj_Ras_from_311_instrumental.mp3"></audio>
@@ -408,7 +408,7 @@ a.addEventListener('seeked',tick);
 a.addEventListener('play',()=>{ cancelAnimationFrame(rafId); rafLoop(); });
 a.addEventListener('pause',()=>cancelAnimationFrame(rafId));
 a.addEventListener('ended',()=>cancelAnimationFrame(rafId));
-document.getElementById('ver').textContent='v272 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 15:59:03';
+document.getElementById('ver').textContent='v273 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 16:06:37';
 tick();
 (function(){
   const j=cues.find(x=>9>=x.start&&9<=x.end);
