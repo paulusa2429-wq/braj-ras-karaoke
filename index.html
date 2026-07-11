@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v275-20260711165210</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v276-20260711165349</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <style>
@@ -39,11 +39,11 @@ audio{width:min(900px,100%);margin:10px 0}
 #time{color:#999;font-size:0.85rem;margin-top:8px}
 #keepAwake{position:fixed;width:2px;height:2px;opacity:0.01;pointer-events:none;bottom:0;left:0;z-index:-1}
 </style></head><body>
-<video id="keepAwake" playsinline webkit-playsinline loop muted preload="auto" disablePictureInPicture></video>
+<video id="keepAwake" playsinline webkit-playsinline loop preload="auto" disablePictureInPicture></video>
 
 <h1>Braj Ras — Word Karaoke</h1>
 <div id="ver"></div>
-<p class="note">v275 · Tune → Radha → Jaap lyrics → Karaoke
+<p class="note">v276 · Tune → Radha → Jaap lyrics → Karaoke
 <div id="pickBar">
   <button class="btn" id="btnPart1" type="button">▶ 1 · Flute Tune (3:20)</button>
   <button class="btn" id="btnPart2" type="button">▶ 2 · Radha Naam He Gana hai</button>
@@ -51,7 +51,7 @@ audio{width:min(900px,100%);margin:10px 0}
   <button class="btn" id="btnPart4" type="button">▶ 4 · Karaoke</button>
   <button class="btn ghost" id="startBtn" type="button">▶ Start All</button>
 </div>
-<p class="note" style="margin:0">Har button alag · Start All = 1→2→3→4 · Phone pe screen on rahega jab tak play ho
+<p class="note" style="margin:0">Har button alag · Start All = 1→2→3→4 · Play ke dauran screen on (Auto-Lock ki zaroorat nahi) · Low Power Mode OFF rakho
 <div id="fluteWrap">
   <audio id="flute" controls playsinline webkit-playsinline preload="auto" src="flute_tune_0_250.mp3"></audio>
   <div id="fluteLyrics"><span style="color:#888;font-size:1.2rem">♪ tune ♪</span></div>
@@ -283,6 +283,7 @@ function showJaap(autoPlay){
   }
 }
 function playPart1(){
+  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=false;
   karaokeReady=false;
   setActiveBtn('btnPart1');
@@ -292,21 +293,25 @@ function playPart1(){
   flute.play().catch(()=>{});
 }
 function playPart2(){
+  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=false;
   setActiveBtn('btnPart2');
   showFirst(true);
 }
 function playPart3(){
+  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=false;
   setActiveBtn('btnPart3');
   showJaap(true);
 }
 function playPart4(){
+  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=false;
   setActiveBtn('btnPart4');
   showKaraoke(true);
 }
 function startAll(){
+  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=true;
   karaokeReady=false;
   setActiveBtn('startBtn');
@@ -434,7 +439,7 @@ async function requestWake(){
   }catch(e){}
   try{
     if(keepVid){
-      keepVid.muted=true;
+      keepVid.muted=false; keepVid.volume=0.01;
       const p=keepVid.play();
       if(p&&p.catch) p.catch(()=>{});
     }
@@ -479,9 +484,9 @@ setInterval(()=>{
   try{
     if(keepVid && keepVid.paused) keepVid.play().catch(()=>{});
   }catch(e){}
-},20000);
+},8000);
 
-document.getElementById('ver').textContent='v275 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 16:52:10';
+document.getElementById('ver').textContent='v276 · keep-awake · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 16:53:49';
 tick();
 (function(){
   const j=cues.find(x=>9>=x.start&&9<=x.end);
