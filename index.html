@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v280-20260711180922</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v281-20260711181134</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <style>
@@ -37,13 +37,11 @@ audio{width:min(900px,100%);margin:10px 0}
 #pickBar .btn{min-width:140px}
 #pickBar .btn.on{outline:2px solid #fff;box-shadow:0 0 12px #ffd70088}
 #time{color:#999;font-size:0.85rem;margin-top:8px}
-#keepAwake{position:fixed;width:2px;height:2px;opacity:0.01;pointer-events:none;bottom:0;left:0;z-index:-1}
 </style></head><body>
-<video id="keepAwake" playsinline webkit-playsinline loop muted preload="auto" disablePictureInPicture></video>
 
 <h1>Braj Ras — Word Karaoke</h1>
 <div id="ver"></div>
-<p class="note">v280 · Tune → Radha → Jaap lyrics → Karaoke
+<p class="note" style="color:#4ade80;font-size:1.05rem;font-weight:800">✅ v281 · PAUSE FIXED · agar v278 dikhe to tab BAND karke naya link kholo
 <div id="pickBar">
   <button class="btn" id="btnPart1" type="button">▶ 1 · Flute Tune (3:20)</button>
   <button class="btn" id="btnPart2" type="button">▶ 2 · Radha Naam He Gana hai</button>
@@ -51,7 +49,7 @@ audio{width:min(900px,100%);margin:10px 0}
   <button class="btn" id="btnPart4" type="button">▶ 4 · Karaoke</button>
   <button class="btn ghost" id="startBtn" type="button">▶ Start All</button>
 </div>
-<p class="note" style="margin:0">Har button alag · Start All = 1→2→3→4 · Pause/play normal · Low Power Mode OFF · Safari
+<p class="note" style="margin:0">Har button alag · Start All = 1→2→3→4 · Pause ab kaam karega · purana tab mat use karo
 <div id="fluteWrap">
   <audio id="flute" controls playsinline webkit-playsinline preload="auto" src="flute_tune_0_250.mp3"></audio>
   <div id="fluteLyrics"><span style="color:#888;font-size:1.2rem">♪ tune ♪</span></div>
@@ -283,7 +281,6 @@ function showJaap(autoPlay){
   }
 }
 function playPart1(){
-  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=false;
   karaokeReady=false;
   setActiveBtn('btnPart1');
@@ -293,25 +290,21 @@ function playPart1(){
   flute.play().catch(()=>{});
 }
 function playPart2(){
-  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=false;
   setActiveBtn('btnPart2');
   showFirst(true);
 }
 function playPart3(){
-  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=false;
   setActiveBtn('btnPart3');
   showJaap(true);
 }
 function playPart4(){
-  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=false;
   setActiveBtn('btnPart4');
   showKaraoke(true);
 }
 function startAll(){
-  try{ if(typeof requestWake==="function") requestWake(); }catch(e){}
   chainMode=true;
   karaokeReady=false;
   setActiveBtn('startBtn');
@@ -419,64 +412,7 @@ a.addEventListener('play',()=>{ cancelAnimationFrame(rafId); rafLoop(); });
 a.addEventListener('pause',()=>cancelAnimationFrame(rafId));
 a.addEventListener('ended',()=>cancelAnimationFrame(rafId));
 
-/* Screen wake while playing — NEVER auto-resume (user pause must work) */
-let wakeLock=null;
-const keepVid=document.getElementById('keepAwake');
-(function(){
-  if(!keepVid) return;
-  keepVid.muted=true;
-  keepVid.setAttribute('muted','');
-  keepVid.src='data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAYfW1vb3YAAABsbXZoZAAAAAAAAAAAAAAAAAAD6AAAB9AAAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAfB0cmFrAAAAXHRraGQAAAADAAAAAAAAAAAAAAABAAAAAAAAB9AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAABAAAAAQAAAAAAAkZWR0cwAAABxlbHN0AAAAAAAAAAEAAAfQAAAAAAABAAAAAAZtZGlhAAAAIG1kaGQAAAAAAAAAAAAAAAAAACzgAABcAFXEAAAAAAAtaGRscgAAAAAAAAAAc291bgAAAAAAAAAAAAAAAACybWluZgAAABBzbWhkAAAAAAAAAAAAAAAkZGluZgAAABxkcmVmAAAAAAAAAAEAAAAMdXJsIAAAAAEAAADUc3RzZAAAAAAAAAABAAAApGV2b20AAABndm1uZAAAAAAAAAAAAAAAACRldmZywAAAAAADABUAAAANdGV0cwAAAAAAAAAAAAAAJGVkdHMAAAAcZWxzdAAAAAAAAAABAAAH0AAAAAABAAAAAAB1dHJhawAAAFx0a2hkAAAAAwAAAAAAAAAAAAAAAgAAAAAAAAHzAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAQAAAAEAAAAAAACRlZHRzAAAAHGVsc3QAAAAAAAAAAQAAAfAAAAAAAQAAAAA=';
-})();
-async function requestWake(){
-  try{
-    if(navigator.wakeLock && navigator.wakeLock.request){
-      if(!wakeLock){
-        wakeLock=await navigator.wakeLock.request('screen');
-        wakeLock.addEventListener('release',()=>{ wakeLock=null; });
-      }
-    }
-  }catch(e){}
-  try{
-    if(keepVid){
-      keepVid.muted=true;
-      const p=keepVid.play();
-      if(p&&p.catch) p.catch(()=>{});
-    }
-  }catch(e){}
-}
-function releaseWake(){
-  try{ if(wakeLock){ wakeLock.release(); wakeLock=null; } }catch(e){}
-  try{ if(keepVid) keepVid.pause(); }catch(e){}
-}
-function anyAudioPlaying(){
-  return [flute,first,jaap,a].some(el=>el && !el.paused && !el.ended);
-}
-function wireKeepAwake(el){
-  if(!el) return;
-  el.addEventListener('play',()=>{ requestWake(); });
-  el.addEventListener('playing',()=>{ requestWake(); });
-  el.addEventListener('pause',()=>{
-    // User pause ya koi bhi pause — jabardasti play MAT karo
-    if(!anyAudioPlaying()) releaseWake();
-  });
-  el.addEventListener('ended',()=>{
-    if(!anyAudioPlaying()) releaseWake();
-  });
-}
-[flute,first,jaap,a].forEach(wireKeepAwake);
-document.addEventListener('visibilitychange',async()=>{
-  // sirf wake lock refresh — audio ko auto play mat karo
-  if(document.visibilityState==='visible' && anyAudioPlaying()){
-    await requestWake();
-  }
-});
-setInterval(()=>{
-  if(!anyAudioPlaying()) return;
-  requestWake();
-},10000);
-
-document.getElementById('ver').textContent='v280 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 18:09:22';
+document.getElementById('ver').textContent='v281 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 18:11:34';
 tick();
 (function(){
   const j=cues.find(x=>9>=x.start&&9<=x.end);
