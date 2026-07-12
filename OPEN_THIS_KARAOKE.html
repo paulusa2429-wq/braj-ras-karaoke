@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v278-20260711175728</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v279-20260711180713</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <style>
@@ -43,7 +43,7 @@ audio{width:min(900px,100%);margin:10px 0}
 
 <h1>Braj Ras — Word Karaoke</h1>
 <div id="ver"></div>
-<p class="note">v278 · Tune → Radha → Jaap lyrics → Karaoke
+<p class="note">v279 · Tune → Radha → Jaap lyrics → Karaoke
 <div id="pickBar">
   <button class="btn" id="btnPart1" type="button">▶ 1 · Flute Tune (3:20)</button>
   <button class="btn" id="btnPart2" type="button">▶ 2 · Radha Naam He Gana hai</button>
@@ -497,36 +497,43 @@ function resumeWantedAudio(){
 }
 function wireKeepAwake(el){
   if(!el) return;
+  // User ne controls pe tap kiya → pause intentional
+  el.addEventListener('pointerdown',()=>{ el.dataset.userTap='1'; });
+  el.addEventListener('touchstart',()=>{ el.dataset.userTap='1'; },{passive:true});
   el.addEventListener('play',()=>{
+    userStopped=false;
+    el.dataset.wantPlay='1';
+    el.dataset.userTap='0';
+    requestWake();
+  });
+  el.addEventListener('playing',()=>{
     userStopped=false;
     el.dataset.wantPlay='1';
     requestWake();
   });
-  el.addEventListener('playing',()=>{
-    el.dataset.wantPlay='1';
-    requestWake();
-  });
   el.addEventListener('pause',()=>{
-    // iOS kabhi-kabhi khud pause kar deta hai — auto resume
-    if(keepWanted && !userStopped && el.dataset.wantPlay==='1' && !el.ended){
-      setTimeout(()=>{
-        if(keepWanted && !userStopped && el.paused && !el.ended){
-          el.play().catch(()=>{});
-          requestWake();
-        }
-      }, 250);
+    const userLikely = el.dataset.userTap==='1' || document.visibilityState==='visible';
+    el.dataset.userTap='0';
+    // Screen visible pe pause = user ne pause dabaya — resume MAT karo
+    if(userLikely){
+      userStopped=true;
+      el.dataset.wantPlay='0';
+      if(!anyAudioPlaying()) releaseWake();
+      return;
     }
-    setTimeout(()=>{ if(!anyAudioPlaying() && userStopped) releaseWake(); }, 400);
+    // Background/lock se pause — baad me resume
+    if(keepWanted && !userStopped && el.dataset.wantPlay==='1' && !el.ended){
+      // only mark; resume on visibilitychange
+    }
   });
   el.addEventListener('ended',()=>{
     el.dataset.wantPlay='0';
     if(!anyAudioPlaying()) releaseWake();
   });
-  el.addEventListener('stalled',()=>{ if(keepWanted) el.load && setTimeout(()=>el.play().catch(()=>{}),300); });
   el.addEventListener('waiting',()=>{ requestWake(); });
   el.addEventListener('error',()=>{
-    if(keepWanted && el.dataset.wantPlay==='1'){
-      setTimeout(()=>{ el.load(); el.play().catch(()=>{}); }, 500);
+    if(keepWanted && !userStopped && el.dataset.wantPlay==='1'){
+      setTimeout(()=>{ try{ el.load(); el.play().catch(()=>{}); }catch(e){} }, 800);
     }
   });
 }
@@ -548,12 +555,12 @@ document.addEventListener('visibilitychange',async()=>{
 document.addEventListener('pageshow',()=>{ if(keepWanted && !userStopped) resumeWantedAudio(); });
 setInterval(()=>{
   if(!keepWanted || userStopped) return;
+  // sirf wake lock / silent tone refresh — paused audio ko jabardasti play mat karo
   requestWake();
-  resumeWantedAudio();
   try{ if(keepVid && keepVid.paused){ keepVid.muted=true; keepVid.play().catch(()=>{}); } }catch(e){}
-},5000);
+},8000);
 
-document.getElementById('ver').textContent='v278 · keep-awake · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 17:57:28';
+document.getElementById('ver').textContent='v279 · keep-awake · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-07-11 18:07:13';
 tick();
 (function(){
   const j=cues.find(x=>9>=x.start&&9<=x.end);
