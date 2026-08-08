@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v286-20260808162257</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v287-20260808162503</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <style>
@@ -27,10 +27,8 @@ h1{color:#ffd700;font-size:1.2rem}
 #karaokeWrap.hide{display:none}
 audio{width:min(900px,100%);margin:10px 0}
 #lyrics{text-align:center;padding:24px 20px;max-width:920px;line-height:2.2;font-size:clamp(1.4rem,4vw,2.1rem);min-height:3.5em;color:#f5f5f5;font-weight:600}
-.w{display:inline-block;margin:0 5px;padding:3px 7px;border-radius:5px;color:#e8e8e8;transition:all .1s}
-.w.done{color:#aaa}
-.w.active{color:#000;background:#ffd700;font-weight:800;transform:scale(1.12);box-shadow:0 0 18px #ffd700aa}
-.w.next{color:#ddd}
+.w{display:inline;margin:0 4px;padding:0;color:#f5f5f5;font-weight:600}
+.w.done,.w.next,.w.active{color:#f5f5f5;background:none;transform:none;box-shadow:none;font-weight:600}
 .btn{margin:5px;padding:9px 14px;background:#ffd700;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer}
 .btn.ghost{background:#333;color:#ffd700}
 #pickBar{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:10px 0 6px;max-width:920px}
@@ -41,7 +39,7 @@ audio{width:min(900px,100%);margin:10px 0}
 
 <h1>Braj Ras — Word Karaoke</h1>
 <div id="ver"></div>
-<p class="note" style="color:#4ade80;font-size:1.05rem;font-weight:800">✅ v286 · Part 3 = music only 0:01–4:51 · no yellow highlighter · Cmd+Shift+R
+<p class="note" style="color:#4ade80;font-size:1.05rem;font-weight:800">✅ v287 · NO yellow highlighter (all parts) · Part 3 music only · Cmd+Shift+R
 <div id="pickBar">
   <button class="btn" id="btnPart1" type="button">▶ 1 · Flute Tune (3:20)</button>
   <button class="btn" id="btnPart2" type="button">▶ 2 · Radha Naam He Gana hai</button>
@@ -156,24 +154,11 @@ function findFirstCue(t){
   if(!hits.length) hits=firstReelCues.filter(x=>t>=x.start-0.08&&t<=x.end+0.12);
   return hits.length?hits[hits.length-1]:null;
 }
-function renderFirst(cue,t){
-  if(!cue||!cue.words||!cue.words.length) return '<span class="w active">♪</span>';
-  let ai=-1;
-  for(let i=cue.words.length-1;i>=0;i--){
-    const w=cue.words[i];
-    if(t>=w.start&&t<w.end+0.25){ ai=i; break; }
-  }
-  if(ai<0&&t<cue.words[0].start) ai=0;
-  if(ai<0&&t>=cue.words[cue.words.length-1].end) ai=cue.words.length-1;
-  if(ai<0) return cue.words.map(w=>'<span class="w next">'+w.text+'</span>').join(' ');
-  return cue.words.map((w,i)=>{
-    let cls='w';
-    if(i===ai) cls+=' active';
-    else if(t>=w.end+0.25) cls+=' done';
-    else cls+=' next';
-    return `<span class="${cls}">${w.text}</span>`;
-  }).join(' ');
+function renderPlain(cue){
+  if(!cue||!cue.text) return '<span style="color:#888">♪</span>';
+  return '<span style="color:#f5f5f5">'+cue.text+'</span>';
 }
+function renderFirst(cue,t){ return renderPlain(cue); }
 function tickFirst(){
   const t=first.currentTime||0;
   const cue=findFirstCue(t);
@@ -210,7 +195,7 @@ function firstLoop(){
   if(!first.paused&&!first.ended) firstRaf=requestAnimationFrame(firstLoop);
 }
 const jaapLy=document.getElementById('jaapLyrics');
-function tickJaap(){ /* v286: static lyrics, no yellow highlighter */ }
+function tickJaap(){ /* v287: static lyrics, no yellow highlighter */ }
 function jaapLoop(){ if(!jaap.paused&&!jaap.ended) jaapRaf=requestAnimationFrame(jaapLoop); }
 function showFirst(autoPlay){
   karaokeReady=false;
@@ -275,10 +260,8 @@ document.getElementById('startBtn').addEventListener('click',startAll);
 flute.addEventListener('ended',()=>{
   if(chainMode) showFirst(true);
 });
-jaap.addEventListener('play',()=>{ cancelAnimationFrame(jaapRaf); jaapLoop(); });
-jaap.addEventListener('pause',()=>cancelAnimationFrame(jaapRaf));
-jaap.addEventListener('timeupdate',tickJaap);
-jaap.addEventListener('seeked',tickJaap);
+jaap.addEventListener('play',()=>{});
+jaap.addEventListener('pause',()=>{});
 jaap.addEventListener('ended',()=>{
   cancelAnimationFrame(jaapRaf);
   if(chainMode) showKaraoke(true);
@@ -306,24 +289,7 @@ function findCue(raw,ht){
   }
   return hits[hits.length-1];
 }
-function render(cue,ht){
-  if(!cue.words||!cue.words.length) return '<span class="w active">'+cue.text+'</span>';
-  let ai=-1;
-  for(let i=cue.words.length-1;i>=0;i--){
-    const w=cue.words[i];
-    if(ht>=w.start&&ht<w.end+HOLD){ ai=i; break; }
-  }
-  // before first word starts — still show first breath as active (no blank flash)
-  if(ai<0&&ht<cue.words[0].start) ai=0;
-  if(ai<0) return cue.words.map(w=>'<span class="w next">'+w.text+'</span>').join(' ');
-  return cue.words.map((w,i)=>{
-    let cls='w';
-    if(i===ai) cls+=' active';
-    else if(ht>=w.end+HOLD) cls+=' done';
-    else cls+=' next';
-    return `<span class="${cls}">${w.text}</span>`;
-  }).join(' ');
-}
+function render(cue,ht){ return renderPlain(cue); }
 const BAKED_MARKERS=[
   {t:0,lag:0.0},{t:9,lag:0.0},{t:49,lag:0.0},{t:69,lag:0.0},{t:84,lag:0.10},
   {t:158,lag:0.0},{t:189,lag:0.0},{t:199,lag:0.0},{t:225,lag:0.0},
@@ -364,7 +330,7 @@ a.addEventListener('play',()=>{ cancelAnimationFrame(rafId); rafLoop(); });
 a.addEventListener('pause',()=>cancelAnimationFrame(rafId));
 a.addEventListener('ended',()=>cancelAnimationFrame(rafId));
 
-document.getElementById('ver').textContent='v286 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-08-08 16:22:57';
+document.getElementById('ver').textContent='v287 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-08-08 16:25:03';
 tick();
 (function(){
   const j=cues.find(x=>9>=x.start&&9<=x.end);
