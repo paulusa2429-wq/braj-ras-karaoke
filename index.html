@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Braj Ras Karaoke v287-20260808162503</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Bhajan-Sukoon Sangam- JP v288-20260808175256</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <style>
 body{background:#0d0d1a;color:#fff;font-family:-apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;padding:20px}
-h1{color:#ffd700;font-size:1.2rem}
-#ver{color:#4ade80;font-size:0.9rem;margin:6px 0;font-weight:700}
+h1{color:#ffd700;font-size:1.2rem;margin:0 0 14px}
 .note{color:#ccc;font-size:0.85rem;text-align:center;max-width:760px}
 #fluteWrap{width:min(900px,100%);margin:8px 0 4px;display:none;flex-direction:column;align-items:center;gap:8px}
 #fluteWrap.show{display:flex}
@@ -37,9 +36,7 @@ audio{width:min(900px,100%);margin:10px 0}
 #time{color:#999;font-size:0.85rem;margin-top:8px}
 </style></head><body>
 
-<h1>Braj Ras — Word Karaoke</h1>
-<div id="ver"></div>
-<p class="note" style="color:#4ade80;font-size:1.05rem;font-weight:800">✅ v287 · NO yellow highlighter (all parts) · Part 3 music only · Cmd+Shift+R
+<h1>Bhajan-Sukoon Sangam- JP</h1>
 <div id="pickBar">
   <button class="btn" id="btnPart1" type="button">▶ 1 · Flute Tune (3:20)</button>
   <button class="btn" id="btnPart2" type="button">▶ 2 · Radha Naam He Gana hai</button>
@@ -47,7 +44,6 @@ audio{width:min(900px,100%);margin:10px 0}
   <button class="btn" id="btnPart4" type="button">▶ 4 · Karaoke</button>
   <button class="btn ghost" id="startBtn" type="button">▶ Start All</button>
 </div>
-<p class="note" style="margin:0">Har button alag · Start All = 1→2→3→4 · Pause ab kaam karega · purana tab mat use karo
 <div id="fluteWrap">
   <audio id="flute" controls playsinline webkit-playsinline preload="auto" src="flute_tune_0_250.mp3"></audio>
   <div id="fluteLyrics"><span style="color:#888;font-size:1.2rem">♪ tune ♪</span></div>
@@ -330,11 +326,5 @@ a.addEventListener('play',()=>{ cancelAnimationFrame(rafId); rafLoop(); });
 a.addEventListener('pause',()=>cancelAnimationFrame(rafId));
 a.addEventListener('ended',()=>cancelAnimationFrame(rafId));
 
-document.getElementById('ver').textContent='v287 · '+cues.length+' phrases · jaap '+jaapCues.length+' lines · 2026-08-08 16:25:03';
 tick();
-(function(){
-  const j=cues.find(x=>9>=x.start&&9<=x.end);
-  const ok=j&&(j.text.includes('Jai Jai')||j.text.includes('Pyaro')||j.text.includes('Radha'));
-  if(!ok) document.getElementById('ver').textContent+=' · ⚠ PURANA FILE — Cmd+Shift+R!';
-})();
 </script></body></html>
