@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shalini Gulati Krishna Bhajans Karaoke v8-20260808173624</title>
+<title>Shalini Gulati Krishna Bhajans Karaoke v9-20260808173759</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <style>
 *{box-sizing:border-box}
-body{background:#0d0d1a;color:#fff;font-family:-apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;padding:20px;padding-top:56px;margin:0}
-.mode-tabs{position:fixed;top:12px;right:12px;display:flex;gap:0;z-index:100;border:1px solid #555;border-radius:10px;overflow:hidden;background:#1a1a2e}
-.mode-tabs button{border:none;background:transparent;color:#ccc;padding:10px 14px;font-size:0.82rem;font-weight:600;cursor:pointer;white-space:nowrap}
+body{background:#0d0d1a;color:#fff;font-family:-apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;padding:20px;margin:0}
+.mode-tabs{display:flex;gap:0;margin:0 0 14px;border:1px solid #555;border-radius:10px;overflow:hidden;background:#1a1a2e;width:min(420px,100%)}
+.mode-tabs button{flex:1;border:none;background:transparent;color:#ccc;padding:12px 10px;font-size:0.9rem;font-weight:700;cursor:pointer}
 .mode-tabs button.active{background:#ffd700;color:#111}
 .mode-tabs button:not(.active):hover{background:rgba(255,255,255,0.08)}
-h1{color:#ffd700;font-size:1.15rem;text-align:center;margin:0 8px 16px;max-width:calc(100% - 120px)}
+h1{color:#ffd700;font-size:1.15rem;text-align:center;margin:0 0 10px}
 #lyrics{text-align:center;padding:22px 14px;margin:10px 0;max-width:940px;width:100%;line-height:2.2;font-size:clamp(1.3rem,4vw,2.1rem);min-height:3.2em;color:#f5f5f5;font-weight:600;background:rgba(255,255,255,0.04);border:1px solid #333;border-radius:12px}
-.w{display:inline-block;margin:0 5px;padding:3px 8px;border-radius:5px;color:#f5f5f5;font-weight:600;transition:all .1s}
-.w.done,.w.next,.w.active{color:#f5f5f5;background:none;transform:none;box-shadow:none;font-weight:600}
-body.practice #lyrics{color:#ffd700;background:rgba(255,215,0,0.06);border-color:#554400}
-body.practice .w.done{color:#888}
-body.practice .w.next{color:#ddd}
-body.practice .w.active{color:#000;background:#ffd700;font-weight:800;transform:scale(1.1);box-shadow:0 0 16px #ffd700aa}
+.w{display:inline-block;margin:0 5px;padding:3px 8px;border-radius:5px;color:#f5f5f5;font-weight:600;transition:all .12s}
+body:not(.practice) .w.done,body:not(.practice) .w.next,body:not(.practice) .w.active{color:#f5f5f5;background:none;transform:none;box-shadow:none;font-weight:600}
+body.practice #lyrics{color:#ffd700;background:rgba(255,215,0,0.08);border-color:#665500}
+body.practice .w.done{color:#777}
+body.practice .w.next{color:#ccc}
+body.practice .w.active{color:#000 !important;background:#ffd700 !important;font-weight:800 !important;transform:scale(1.12);box-shadow:0 0 18px #ffd700cc}
 audio{width:min(900px,100%);margin:10px 0}
 #time{color:#888;font-size:0.82rem}
 @media (max-width:520px){
-  body{padding-top:72px}
-  h1{font-size:1rem;max-width:100%}
-  .mode-tabs{top:8px;right:8px;left:8px;justify-content:stretch}
-  .mode-tabs button{flex:1;padding:10px 8px;font-size:0.75rem}
+  h1{font-size:1rem}
+  .mode-tabs button{font-size:0.78rem;padding:10px 6px}
 }
 </style></head><body>
+<h1>Special Krishna Bhajans Mashup — Shalini Gulati</h1>
 <div class="mode-tabs">
   <button id="btn-vocals" class="active" type="button">With Vocals</button>
   <button id="btn-inst" type="button">Without Vocals</button>
 </div>
-<h1>Special Krishna Bhajans Mashup — Shalini Gulati</h1>
 <div id="lyrics"><span style="color:#888">♪ bhajan mashup ♪</span></div>
 <audio id="audio" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3"></audio>
 <div id="time"></div>
@@ -55,9 +53,15 @@ function render(c,t){
   let ai=-1;
   for(let i=c.words.length-1;i>=0;i--) if(t>=c.words[i].start&&t<c.words[i].end+HOLD){ai=i;break;}
   if(ai<0&&t<c.words[0].start) ai=0;
+  const hl=mode==='instrumental';
   return c.words.map((w,i)=>{
-    let cls='w'+(i===ai?' active':t>=w.end+HOLD?' done':' next');
-    return `<span class="${cls}">${w.text}</span>`;
+    let cls='w';
+    if(hl) cls+=(i===ai?' active':t>=w.end+HOLD?' done':' next');
+    let st='';
+    if(hl&&i===ai) st=' style="color:#000;background:#ffd700;font-weight:800;transform:scale(1.12);box-shadow:0 0 18px #ffd700cc"';
+    else if(hl&&t>=w.end+HOLD) st=' style="color:#777"';
+    else if(hl) st=' style="color:#ccc"';
+    return `<span class="${cls}"${st}>${w.text}</span>`;
   }).join(' ');
 }
 function tick(){
