@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Bhajan-Sukoon Sangam- JP v352-20260816165306</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Bhajan-Sukoon Sangam- JP v353-20260816165518</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  var EMBED='352';
+  var EMBED='353';
   var want=(location.search.match(/[?&]v=(\d+)/)||[])[1]||EMBED;
   var have=(document.title.match(/v(\d+)/)||[])[1];
   if(have===want) return;
@@ -41,6 +41,10 @@ body{margin:0;min-height:100vh;background:#0c0c10;color:#e6e4e1;font-family:-app
 .part-btn .d{font-size:.68rem;color:#6f6d68;font-variant-numeric:tabular-nums;white-space:nowrap}
 .part-btn.start-all{grid-template-columns:1fr;justify-items:center;margin-top:6px;padding:10px;border-style:dashed;color:#a8a098}
 .part-btn.start-all.on{border-style:solid}
+.back-btn{display:none;width:100%;margin:0 0 14px;padding:8px 0;background:none;border:none;color:#8a8778;font-size:.78rem;font-weight:500;cursor:pointer;text-align:left;font-family:inherit;letter-spacing:.02em}
+.back-btn:hover{color:#c9a962}
+.app.playing .part-list{display:none}
+.app.playing .back-btn{display:block}
 .player-card{width:100%;background:rgba(16,16,22,.92);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:20px 18px 16px;display:flex;flex-direction:column;align-items:stretch;gap:14px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
 #fluteWrap,#instagramWrap,#secondWrap,#ytFd7Wrap,#firstWrap,#preJaapWrap,#jaapWrap{width:100%;margin:0;display:none;flex-direction:column;align-items:stretch;gap:14px}
 #fluteWrap.show,#instagramWrap.show,#secondWrap.show,#ytFd7Wrap.show,#firstWrap.show,#preJaapWrap.show,#jaapWrap.show{display:flex}
@@ -76,54 +80,55 @@ audio{width:100%;height:42px;border-radius:10px;color-scheme:dark;opacity:.95}
   <button type="button" class="part-btn" id="btnPart8"><span class="n">8</span><span class="t">Braj Ras Bhajan</span><span class="d">10:31</span></button>
   <button type="button" class="part-btn start-all" id="startBtn">Play full sequence</button>
 </div>
+<button type="button" class="back-btn" id="backBtn">← All tracks</button>
 <div id="fluteWrap" class="player-card">
   <div id="fluteLyrics" class="lyrics-box"><span style="color:#666;font-size:1rem">♪ tune ♪</span></div>
-  <audio id="flute" controls playsinline webkit-playsinline preload="auto" src="flute_tune_0_250.mp3?v=352"></audio>
-  <p class="note" style="margin:0">First 3:20 · <a href="https://www.youtube.com/watch?v=j2vjmSzkqdU" target="_blank" rel="noopener" style="color:#ffd700">YouTube</a></p>
+  <audio id="flute" controls playsinline webkit-playsinline preload="auto" src="flute_tune_0_250.mp3?v=353"></audio>
+  <p class="note" style="margin:0">First 3:20 · <a href="https://www.youtube.com/watch?v=j2vjmSzkqdU" target="_blank" rel="noopener">YouTube</a></p>
 </div>
 <div id="instagramWrap" class="player-card">
 <div class="mode-switch" id="part2ModeBar">
   <button class="btn on" id="btnPart2Singalong" type="button">Sing-along</button>
   <button class="btn ghost" id="btnPart2Karaoke" type="button">Karaoke 30%</button>
 </div>
-<div id="instagramLyrics">▶ 2 · Radhe Radhe japo +O Naam meri Radha Rani +kishori kuch aisa</div>
-<audio id="instagramOrig" controls playsinline webkit-playsinline preload="auto" src="intro_reel_instagram_v312.mp3?v=352"></audio>
-<audio id="instagramMix" controls playsinline webkit-playsinline preload="auto" src="intro_reel_instagram_karaoke_mix.mp3?v=352" style="display:none"></audio>
-  <p class="note" style="margin:0"><a href="https://www.instagram.com/reels/DaSvEbzyNMv/" target="_blank" rel="noopener" style="color:#ffd700">reel</a> · flute · shorts · <b>2:20–2:40 replay + 10s</b> · flute · short 2</p>
+<div id="instagramLyrics" class="lyrics-box">▶ 2 · Radhe Radhe japo +O Naam meri Radha Rani +kishori kuch aisa</div>
+<audio id="instagramOrig" controls playsinline webkit-playsinline preload="auto" src="intro_reel_instagram_v312.mp3?v=353"></audio>
+<audio id="instagramMix" controls playsinline webkit-playsinline preload="auto" src="intro_reel_instagram_karaoke_mix.mp3?v=353" style="display:none"></audio>
+  <p class="note" style="margin:0"><a href="https://www.instagram.com/reels/DaSvEbzyNMv/" target="_blank" rel="noopener">reel</a> · flute · shorts · <b>2:20–2:40 replay + 10s</b> · flute · short 2</p>
 </div>
 <div id="secondWrap" class="player-card">
-  <audio id="second" controls playsinline webkit-playsinline preload="auto" src="intro_reel_sudama_vocals.mp3?v=352"></audio>
-  <div id="secondLyrics">▶ 3 · Sudama Reel</div>
-  <p class="note" style="margin:0"><a href="https://www.facebook.com/reel/871519962338548" target="_blank" rel="noopener" style="color:#ffd700">source reel</a></p>
+  <div id="secondLyrics" class="lyrics-box">▶ 3 · Sudama Reel</div>
+  <audio id="second" controls playsinline webkit-playsinline preload="auto" src="intro_reel_sudama_vocals.mp3?v=353"></audio>
+  <p class="note" style="margin:0"><a href="https://www.facebook.com/reel/871519962338548" target="_blank" rel="noopener">source reel</a></p>
 </div>
 <div id="ytFd7Wrap" class="player-card">
-  <audio id="ytFd7" controls playsinline webkit-playsinline preload="auto" src="intro_reel_yt_fd7o0.mp3?v=352"></audio>
-  <div id="ytFd7Lyrics">▶ 4 · Vrindavan Mein Dolo · Radhe Radhe</div>
-  <p class="note" style="margin:0"><a href="https://www.youtube.com/watch?v=FD7o0B3Rgts" target="_blank" rel="noopener" style="color:#ffd700">YouTube</a></p>
+  <div id="ytFd7Lyrics" class="lyrics-box">▶ 4 · Vrindavan Mein Dolo · Radhe Radhe</div>
+  <audio id="ytFd7" controls playsinline webkit-playsinline preload="auto" src="intro_reel_yt_fd7o0.mp3?v=353"></audio>
+  <p class="note" style="margin:0"><a href="https://www.youtube.com/watch?v=FD7o0B3Rgts" target="_blank" rel="noopener">YouTube</a></p>
 </div>
 <div id="firstWrap" class="player-card">
-  <audio id="first" controls playsinline webkit-playsinline preload="auto" src="intro_reel_first_vocals.mp3?v=352"></audio>
-  <div id="firstLyrics">▶ 5 · Radha Naam He Gana hai</div>
-  <p class="note" style="margin:0"><a href="https://www.facebook.com/reel/1509110300621446" target="_blank" rel="noopener" style="color:#ffd700">source reel</a> · vocals</p>
+  <div id="firstLyrics" class="lyrics-box">▶ 5 · Radha Naam He Gana hai</div>
+  <audio id="first" controls playsinline webkit-playsinline preload="auto" src="intro_reel_first_vocals.mp3?v=353"></audio>
+  <p class="note" style="margin:0"><a href="https://www.facebook.com/reel/1509110300621446" target="_blank" rel="noopener">source reel</a> · vocals</p>
 </div>
 <div id="preJaapWrap" class="player-card">
-  <audio id="preJaap" controls playsinline webkit-playsinline preload="auto" src="intro_reel_fb173418_v325.mp3?v=352"></audio>
-  <div id="preJaapLyrics">▶ 6 · Radhe Radhe Reel</div>
-  <p class="note" style="margin:0"><a href="https://www.facebook.com/reel/1734182191289909" target="_blank" rel="noopener" style="color:#ffd700">Facebook reel</a></p>
+  <div id="preJaapLyrics" class="lyrics-box">▶ 6 · Radhe Radhe Reel</div>
+  <audio id="preJaap" controls playsinline webkit-playsinline preload="auto" src="intro_reel_fb173418_v325.mp3?v=353"></audio>
+  <p class="note" style="margin:0"><a href="https://www.facebook.com/reel/1734182191289909" target="_blank" rel="noopener">Facebook reel</a></p>
 </div>
 <div id="jaapWrap" class="player-card">
   <div id="jaapLyrics">Radha Radha Radha Radha</div>
-  <audio id="jaap" controls playsinline webkit-playsinline preload="auto" src="radha_naam_jaap_vocals.mp3?v=352"></audio>
-  <p class="note" style="margin:0">Radha Naam Jaap with vocals (4:51) · <a href="https://www.youtube.com/watch?v=0LhTJgJyfM4" target="_blank" rel="noopener" style="color:#ffd700">YouTube</a></p>
+  <audio id="jaap" controls playsinline webkit-playsinline preload="auto" src="radha_naam_jaap_vocals.mp3?v=353"></audio>
+  <p class="note" style="margin:0">Radha Naam Jaap with vocals (4:51) · <a href="https://www.youtube.com/watch?v=0LhTJgJyfM4" target="_blank" rel="noopener">YouTube</a></p>
 </div>
 <div id="karaokeWrap" class="hide player-card">
 <div class="mode-switch" id="part8ModeBar">
   <button class="btn on" id="btnSingalong" type="button">Sing-along</button>
   <button class="btn ghost" id="btnKaraokeMode" type="button">Karaoke 30%</button>
 </div>
-<div id="lyrics">▶ Play</div>
-<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="Braj_Ras_from_311.mp3?v=352"></audio>
-<audio id="audioMix" controls playsinline webkit-playsinline preload="auto" src="Braj_Ras_from_311_karaoke_mix.mp3?v=352" style="display:none"></audio>
+<div id="lyrics" class="lyrics-box">▶ Play</div>
+<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="Braj_Ras_from_311.mp3?v=353"></audio>
+<audio id="audioMix" controls playsinline webkit-playsinline preload="auto" src="Braj_Ras_from_311_karaoke_mix.mp3?v=353" style="display:none"></audio>
 <div id="time" aria-hidden="true"></div>
 </div>
 </div>
@@ -138,8 +143,8 @@ const instagramReelCues=[{"start": 0.0, "end": 2.34, "text": "वृन्दा
 const jaapCues=[{"start": 0.22, "end": 3.21, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 0.22, "end": 0.89}, {"text": "Radha", "start": 0.98, "end": 1.65}, {"text": "Radha", "start": 1.74, "end": 2.41}, {"text": "Radha", "start": 2.5, "end": 3.17}]}, {"start": 3.26, "end": 6.25, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 3.26, "end": 3.93}, {"text": "Radha", "start": 4.02, "end": 4.69}, {"text": "Radha", "start": 4.78, "end": 5.45}, {"text": "Radha", "start": 5.54, "end": 6.21}]}, {"start": 6.3, "end": 9.29, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 6.3, "end": 6.97}, {"text": "Radha", "start": 7.06, "end": 7.73}, {"text": "Radha", "start": 7.82, "end": 8.49}, {"text": "Radha", "start": 8.58, "end": 9.25}]}, {"start": 9.34, "end": 12.33, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 9.34, "end": 10.01}, {"text": "Radha", "start": 10.1, "end": 10.77}, {"text": "Radha", "start": 10.86, "end": 11.53}, {"text": "Radha", "start": 11.62, "end": 12.29}]}, {"start": 12.38, "end": 15.37, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 12.38, "end": 13.05}, {"text": "Radha", "start": 13.14, "end": 13.81}, {"text": "Radha", "start": 13.9, "end": 14.57}, {"text": "Radha", "start": 14.66, "end": 15.33}]}, {"start": 15.42, "end": 18.41, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 15.42, "end": 16.09}, {"text": "Radha", "start": 16.18, "end": 16.85}, {"text": "Radha", "start": 16.94, "end": 17.61}, {"text": "Radha", "start": 17.7, "end": 18.37}]}, {"start": 18.46, "end": 21.45, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 18.46, "end": 19.13}, {"text": "Radha", "start": 19.22, "end": 19.89}, {"text": "Radha", "start": 19.98, "end": 20.65}, {"text": "Radha", "start": 20.74, "end": 21.41}]}, {"start": 21.5, "end": 24.49, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 21.5, "end": 22.17}, {"text": "Radha", "start": 22.26, "end": 22.93}, {"text": "Radha", "start": 23.02, "end": 23.69}, {"text": "Radha", "start": 23.78, "end": 24.45}]}, {"start": 24.54, "end": 27.53, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 24.54, "end": 25.21}, {"text": "Radha", "start": 25.3, "end": 25.97}, {"text": "Radha", "start": 26.06, "end": 26.73}, {"text": "Radha", "start": 26.82, "end": 27.49}]}, {"start": 27.58, "end": 30.57, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 27.58, "end": 28.25}, {"text": "Radha", "start": 28.34, "end": 29.01}, {"text": "Radha", "start": 29.1, "end": 29.77}, {"text": "Radha", "start": 29.86, "end": 30.53}]}, {"start": 30.62, "end": 33.61, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 30.62, "end": 31.29}, {"text": "Radha", "start": 31.38, "end": 32.05}, {"text": "Radha", "start": 32.14, "end": 32.81}, {"text": "Radha", "start": 32.9, "end": 33.57}]}, {"start": 33.66, "end": 36.65, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 33.66, "end": 34.33}, {"text": "Radha", "start": 34.42, "end": 35.09}, {"text": "Radha", "start": 35.18, "end": 35.85}, {"text": "Radha", "start": 35.94, "end": 36.61}]}, {"start": 36.7, "end": 39.69, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 36.7, "end": 37.37}, {"text": "Radha", "start": 37.46, "end": 38.13}, {"text": "Radha", "start": 38.22, "end": 38.89}, {"text": "Radha", "start": 38.98, "end": 39.65}]}, {"start": 39.74, "end": 42.73, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 39.74, "end": 40.41}, {"text": "Radha", "start": 40.5, "end": 41.17}, {"text": "Radha", "start": 41.26, "end": 41.93}, {"text": "Radha", "start": 42.02, "end": 42.69}]}, {"start": 42.78, "end": 45.77, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 42.78, "end": 43.45}, {"text": "Radha", "start": 43.54, "end": 44.21}, {"text": "Radha", "start": 44.3, "end": 44.97}, {"text": "Radha", "start": 45.06, "end": 45.73}]}, {"start": 45.82, "end": 48.81, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 45.82, "end": 46.49}, {"text": "Radha", "start": 46.58, "end": 47.25}, {"text": "Radha", "start": 47.34, "end": 48.01}, {"text": "Radha", "start": 48.1, "end": 48.77}]}, {"start": 48.86, "end": 51.85, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 48.86, "end": 49.53}, {"text": "Radha", "start": 49.62, "end": 50.29}, {"text": "Radha", "start": 50.38, "end": 51.05}, {"text": "Radha", "start": 51.14, "end": 51.81}]}, {"start": 51.9, "end": 54.89, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 51.9, "end": 52.57}, {"text": "Radha", "start": 52.66, "end": 53.33}, {"text": "Radha", "start": 53.42, "end": 54.09}, {"text": "Radha", "start": 54.18, "end": 54.85}]}, {"start": 54.94, "end": 57.93, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 54.94, "end": 55.61}, {"text": "Radha", "start": 55.7, "end": 56.37}, {"text": "Radha", "start": 56.46, "end": 57.13}, {"text": "Radha", "start": 57.22, "end": 57.89}]}, {"start": 57.98, "end": 60.97, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 57.98, "end": 58.65}, {"text": "Radha", "start": 58.74, "end": 59.41}, {"text": "Radha", "start": 59.5, "end": 60.17}, {"text": "Radha", "start": 60.26, "end": 60.93}]}, {"start": 61.02, "end": 64.01, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 61.02, "end": 61.69}, {"text": "Radha", "start": 61.78, "end": 62.45}, {"text": "Radha", "start": 62.54, "end": 63.21}, {"text": "Radha", "start": 63.3, "end": 63.97}]}, {"start": 64.06, "end": 67.05, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 64.06, "end": 64.73}, {"text": "Radha", "start": 64.82, "end": 65.49}, {"text": "Radha", "start": 65.58, "end": 66.25}, {"text": "Radha", "start": 66.34, "end": 67.01}]}, {"start": 67.1, "end": 70.09, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 67.1, "end": 67.77}, {"text": "Radha", "start": 67.86, "end": 68.53}, {"text": "Radha", "start": 68.62, "end": 69.29}, {"text": "Radha", "start": 69.38, "end": 70.05}]}, {"start": 70.14, "end": 73.13, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 70.14, "end": 70.81}, {"text": "Radha", "start": 70.9, "end": 71.57}, {"text": "Radha", "start": 71.66, "end": 72.33}, {"text": "Radha", "start": 72.42, "end": 73.09}]}, {"start": 73.18, "end": 76.17, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 73.18, "end": 73.85}, {"text": "Radha", "start": 73.94, "end": 74.61}, {"text": "Radha", "start": 74.7, "end": 75.37}, {"text": "Radha", "start": 75.46, "end": 76.13}]}, {"start": 76.22, "end": 79.21, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 76.22, "end": 76.89}, {"text": "Radha", "start": 76.98, "end": 77.65}, {"text": "Radha", "start": 77.74, "end": 78.41}, {"text": "Radha", "start": 78.5, "end": 79.17}]}, {"start": 79.26, "end": 82.25, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 79.26, "end": 79.93}, {"text": "Radha", "start": 80.02, "end": 80.69}, {"text": "Radha", "start": 80.78, "end": 81.45}, {"text": "Radha", "start": 81.54, "end": 82.21}]}, {"start": 82.3, "end": 85.29, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 82.3, "end": 82.97}, {"text": "Radha", "start": 83.06, "end": 83.73}, {"text": "Radha", "start": 83.82, "end": 84.49}, {"text": "Radha", "start": 84.58, "end": 85.25}]}, {"start": 85.34, "end": 88.33, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 85.34, "end": 86.01}, {"text": "Radha", "start": 86.1, "end": 86.77}, {"text": "Radha", "start": 86.86, "end": 87.53}, {"text": "Radha", "start": 87.62, "end": 88.29}]}, {"start": 88.38, "end": 91.37, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 88.38, "end": 89.05}, {"text": "Radha", "start": 89.14, "end": 89.81}, {"text": "Radha", "start": 89.9, "end": 90.57}, {"text": "Radha", "start": 90.66, "end": 91.33}]}, {"start": 91.42, "end": 94.41, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 91.42, "end": 92.09}, {"text": "Radha", "start": 92.18, "end": 92.85}, {"text": "Radha", "start": 92.94, "end": 93.61}, {"text": "Radha", "start": 93.7, "end": 94.37}]}, {"start": 94.46, "end": 97.45, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 94.46, "end": 95.13}, {"text": "Radha", "start": 95.22, "end": 95.89}, {"text": "Radha", "start": 95.98, "end": 96.65}, {"text": "Radha", "start": 96.74, "end": 97.41}]}, {"start": 97.5, "end": 100.49, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 97.5, "end": 98.17}, {"text": "Radha", "start": 98.26, "end": 98.93}, {"text": "Radha", "start": 99.02, "end": 99.69}, {"text": "Radha", "start": 99.78, "end": 100.45}]}, {"start": 100.54, "end": 103.53, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 100.54, "end": 101.21}, {"text": "Radha", "start": 101.3, "end": 101.97}, {"text": "Radha", "start": 102.06, "end": 102.73}, {"text": "Radha", "start": 102.82, "end": 103.49}]}, {"start": 103.58, "end": 106.57, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 103.58, "end": 104.25}, {"text": "Radha", "start": 104.34, "end": 105.01}, {"text": "Radha", "start": 105.1, "end": 105.77}, {"text": "Radha", "start": 105.86, "end": 106.53}]}, {"start": 106.62, "end": 109.61, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 106.62, "end": 107.29}, {"text": "Radha", "start": 107.38, "end": 108.05}, {"text": "Radha", "start": 108.14, "end": 108.81}, {"text": "Radha", "start": 108.9, "end": 109.57}]}, {"start": 109.66, "end": 112.65, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 109.66, "end": 110.33}, {"text": "Radha", "start": 110.42, "end": 111.09}, {"text": "Radha", "start": 111.18, "end": 111.85}, {"text": "Radha", "start": 111.94, "end": 112.61}]}, {"start": 112.7, "end": 115.69, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 112.7, "end": 113.37}, {"text": "Radha", "start": 113.46, "end": 114.13}, {"text": "Radha", "start": 114.22, "end": 114.89}, {"text": "Radha", "start": 114.98, "end": 115.65}]}, {"start": 115.74, "end": 118.73, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 115.74, "end": 116.41}, {"text": "Radha", "start": 116.5, "end": 117.17}, {"text": "Radha", "start": 117.26, "end": 117.93}, {"text": "Radha", "start": 118.02, "end": 118.69}]}, {"start": 118.78, "end": 121.77, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 118.78, "end": 119.45}, {"text": "Radha", "start": 119.54, "end": 120.21}, {"text": "Radha", "start": 120.3, "end": 120.97}, {"text": "Radha", "start": 121.06, "end": 121.73}]}, {"start": 121.82, "end": 124.81, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 121.82, "end": 122.49}, {"text": "Radha", "start": 122.58, "end": 123.25}, {"text": "Radha", "start": 123.34, "end": 124.01}, {"text": "Radha", "start": 124.1, "end": 124.77}]}, {"start": 124.86, "end": 127.85, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 124.86, "end": 125.53}, {"text": "Radha", "start": 125.62, "end": 126.29}, {"text": "Radha", "start": 126.38, "end": 127.05}, {"text": "Radha", "start": 127.14, "end": 127.81}]}, {"start": 127.9, "end": 130.89, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 127.9, "end": 128.57}, {"text": "Radha", "start": 128.66, "end": 129.33}, {"text": "Radha", "start": 129.42, "end": 130.09}, {"text": "Radha", "start": 130.18, "end": 130.85}]}, {"start": 130.94, "end": 133.93, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 130.94, "end": 131.61}, {"text": "Radha", "start": 131.7, "end": 132.37}, {"text": "Radha", "start": 132.46, "end": 133.13}, {"text": "Radha", "start": 133.22, "end": 133.89}]}, {"start": 133.98, "end": 136.97, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 133.98, "end": 134.65}, {"text": "Radha", "start": 134.74, "end": 135.41}, {"text": "Radha", "start": 135.5, "end": 136.17}, {"text": "Radha", "start": 136.26, "end": 136.93}]}, {"start": 137.02, "end": 140.01, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 137.02, "end": 137.69}, {"text": "Radha", "start": 137.78, "end": 138.45}, {"text": "Radha", "start": 138.54, "end": 139.21}, {"text": "Radha", "start": 139.3, "end": 139.97}]}, {"start": 140.06, "end": 143.05, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 140.06, "end": 140.73}, {"text": "Radha", "start": 140.82, "end": 141.49}, {"text": "Radha", "start": 141.58, "end": 142.25}, {"text": "Radha", "start": 142.34, "end": 143.01}]}, {"start": 143.1, "end": 146.09, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 143.1, "end": 143.77}, {"text": "Radha", "start": 143.86, "end": 144.53}, {"text": "Radha", "start": 144.62, "end": 145.29}, {"text": "Radha", "start": 145.38, "end": 146.05}]}, {"start": 146.14, "end": 149.13, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 146.14, "end": 146.81}, {"text": "Radha", "start": 146.9, "end": 147.57}, {"text": "Radha", "start": 147.66, "end": 148.33}, {"text": "Radha", "start": 148.42, "end": 149.09}]}, {"start": 149.18, "end": 152.17, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 149.18, "end": 149.85}, {"text": "Radha", "start": 149.94, "end": 150.61}, {"text": "Radha", "start": 150.7, "end": 151.37}, {"text": "Radha", "start": 151.46, "end": 152.13}]}, {"start": 152.22, "end": 155.21, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 152.22, "end": 152.89}, {"text": "Radha", "start": 152.98, "end": 153.65}, {"text": "Radha", "start": 153.74, "end": 154.41}, {"text": "Radha", "start": 154.5, "end": 155.17}]}, {"start": 155.26, "end": 158.25, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 155.26, "end": 155.93}, {"text": "Radha", "start": 156.02, "end": 156.69}, {"text": "Radha", "start": 156.78, "end": 157.45}, {"text": "Radha", "start": 157.54, "end": 158.21}]}, {"start": 158.3, "end": 161.29, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 158.3, "end": 158.97}, {"text": "Radha", "start": 159.06, "end": 159.73}, {"text": "Radha", "start": 159.82, "end": 160.49}, {"text": "Radha", "start": 160.58, "end": 161.25}]}, {"start": 161.34, "end": 164.33, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 161.34, "end": 162.01}, {"text": "Radha", "start": 162.1, "end": 162.77}, {"text": "Radha", "start": 162.86, "end": 163.53}, {"text": "Radha", "start": 163.62, "end": 164.29}]}, {"start": 164.38, "end": 167.37, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 164.38, "end": 165.05}, {"text": "Radha", "start": 165.14, "end": 165.81}, {"text": "Radha", "start": 165.9, "end": 166.57}, {"text": "Radha", "start": 166.66, "end": 167.33}]}, {"start": 167.42, "end": 170.41, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 167.42, "end": 168.09}, {"text": "Radha", "start": 168.18, "end": 168.85}, {"text": "Radha", "start": 168.94, "end": 169.61}, {"text": "Radha", "start": 169.7, "end": 170.37}]}, {"start": 170.46, "end": 173.45, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 170.46, "end": 171.13}, {"text": "Radha", "start": 171.22, "end": 171.89}, {"text": "Radha", "start": 171.98, "end": 172.65}, {"text": "Radha", "start": 172.74, "end": 173.41}]}, {"start": 173.5, "end": 176.49, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 173.5, "end": 174.17}, {"text": "Radha", "start": 174.26, "end": 174.93}, {"text": "Radha", "start": 175.02, "end": 175.69}, {"text": "Radha", "start": 175.78, "end": 176.45}]}, {"start": 176.54, "end": 179.53, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 176.54, "end": 177.21}, {"text": "Radha", "start": 177.3, "end": 177.97}, {"text": "Radha", "start": 178.06, "end": 178.73}, {"text": "Radha", "start": 178.82, "end": 179.49}]}, {"start": 179.58, "end": 182.57, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 179.58, "end": 180.25}, {"text": "Radha", "start": 180.34, "end": 181.01}, {"text": "Radha", "start": 181.1, "end": 181.77}, {"text": "Radha", "start": 181.86, "end": 182.53}]}, {"start": 182.62, "end": 185.61, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 182.62, "end": 183.29}, {"text": "Radha", "start": 183.38, "end": 184.05}, {"text": "Radha", "start": 184.14, "end": 184.81}, {"text": "Radha", "start": 184.9, "end": 185.57}]}, {"start": 185.66, "end": 188.65, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 185.66, "end": 186.33}, {"text": "Radha", "start": 186.42, "end": 187.09}, {"text": "Radha", "start": 187.18, "end": 187.85}, {"text": "Radha", "start": 187.94, "end": 188.61}]}, {"start": 188.7, "end": 191.69, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 188.7, "end": 189.37}, {"text": "Radha", "start": 189.46, "end": 190.13}, {"text": "Radha", "start": 190.22, "end": 190.89}, {"text": "Radha", "start": 190.98, "end": 191.65}]}, {"start": 191.74, "end": 194.73, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 191.74, "end": 192.41}, {"text": "Radha", "start": 192.5, "end": 193.17}, {"text": "Radha", "start": 193.26, "end": 193.93}, {"text": "Radha", "start": 194.02, "end": 194.69}]}, {"start": 194.78, "end": 197.77, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 194.78, "end": 195.45}, {"text": "Radha", "start": 195.54, "end": 196.21}, {"text": "Radha", "start": 196.3, "end": 196.97}, {"text": "Radha", "start": 197.06, "end": 197.73}]}, {"start": 197.82, "end": 200.81, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 197.82, "end": 198.49}, {"text": "Radha", "start": 198.58, "end": 199.25}, {"text": "Radha", "start": 199.34, "end": 200.01}, {"text": "Radha", "start": 200.1, "end": 200.77}]}, {"start": 200.86, "end": 203.85, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 200.86, "end": 201.53}, {"text": "Radha", "start": 201.62, "end": 202.29}, {"text": "Radha", "start": 202.38, "end": 203.05}, {"text": "Radha", "start": 203.14, "end": 203.81}]}, {"start": 203.9, "end": 206.89, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 203.9, "end": 204.57}, {"text": "Radha", "start": 204.66, "end": 205.33}, {"text": "Radha", "start": 205.42, "end": 206.09}, {"text": "Radha", "start": 206.18, "end": 206.85}]}, {"start": 206.94, "end": 209.93, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 206.94, "end": 207.61}, {"text": "Radha", "start": 207.7, "end": 208.37}, {"text": "Radha", "start": 208.46, "end": 209.13}, {"text": "Radha", "start": 209.22, "end": 209.89}]}, {"start": 209.98, "end": 212.97, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 209.98, "end": 210.65}, {"text": "Radha", "start": 210.74, "end": 211.41}, {"text": "Radha", "start": 211.5, "end": 212.17}, {"text": "Radha", "start": 212.26, "end": 212.93}]}, {"start": 213.02, "end": 216.01, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 213.02, "end": 213.69}, {"text": "Radha", "start": 213.78, "end": 214.45}, {"text": "Radha", "start": 214.54, "end": 215.21}, {"text": "Radha", "start": 215.3, "end": 215.97}]}, {"start": 216.06, "end": 219.05, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 216.06, "end": 216.73}, {"text": "Radha", "start": 216.82, "end": 217.49}, {"text": "Radha", "start": 217.58, "end": 218.25}, {"text": "Radha", "start": 218.34, "end": 219.01}]}, {"start": 219.1, "end": 222.09, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 219.1, "end": 219.77}, {"text": "Radha", "start": 219.86, "end": 220.53}, {"text": "Radha", "start": 220.62, "end": 221.29}, {"text": "Radha", "start": 221.38, "end": 222.05}]}, {"start": 222.14, "end": 225.13, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 222.14, "end": 222.81}, {"text": "Radha", "start": 222.9, "end": 223.57}, {"text": "Radha", "start": 223.66, "end": 224.33}, {"text": "Radha", "start": 224.42, "end": 225.09}]}, {"start": 225.18, "end": 228.17, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 225.18, "end": 225.85}, {"text": "Radha", "start": 225.94, "end": 226.61}, {"text": "Radha", "start": 226.7, "end": 227.37}, {"text": "Radha", "start": 227.46, "end": 228.13}]}, {"start": 228.22, "end": 231.21, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 228.22, "end": 228.89}, {"text": "Radha", "start": 228.98, "end": 229.65}, {"text": "Radha", "start": 229.74, "end": 230.41}, {"text": "Radha", "start": 230.5, "end": 231.17}]}, {"start": 231.26, "end": 234.25, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 231.26, "end": 231.93}, {"text": "Radha", "start": 232.02, "end": 232.69}, {"text": "Radha", "start": 232.78, "end": 233.45}, {"text": "Radha", "start": 233.54, "end": 234.21}]}, {"start": 234.3, "end": 237.29, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 234.3, "end": 234.97}, {"text": "Radha", "start": 235.06, "end": 235.73}, {"text": "Radha", "start": 235.82, "end": 236.49}, {"text": "Radha", "start": 236.58, "end": 237.25}]}, {"start": 237.34, "end": 240.33, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 237.34, "end": 238.01}, {"text": "Radha", "start": 238.1, "end": 238.77}, {"text": "Radha", "start": 238.86, "end": 239.53}, {"text": "Radha", "start": 239.62, "end": 240.29}]}, {"start": 240.38, "end": 243.37, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 240.38, "end": 241.05}, {"text": "Radha", "start": 241.14, "end": 241.81}, {"text": "Radha", "start": 241.9, "end": 242.57}, {"text": "Radha", "start": 242.66, "end": 243.33}]}, {"start": 243.42, "end": 246.41, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 243.42, "end": 244.09}, {"text": "Radha", "start": 244.18, "end": 244.85}, {"text": "Radha", "start": 244.94, "end": 245.61}, {"text": "Radha", "start": 245.7, "end": 246.37}]}, {"start": 246.46, "end": 249.45, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 246.46, "end": 247.13}, {"text": "Radha", "start": 247.22, "end": 247.89}, {"text": "Radha", "start": 247.98, "end": 248.65}, {"text": "Radha", "start": 248.74, "end": 249.41}]}, {"start": 249.5, "end": 252.49, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 249.5, "end": 250.17}, {"text": "Radha", "start": 250.26, "end": 250.93}, {"text": "Radha", "start": 251.02, "end": 251.69}, {"text": "Radha", "start": 251.78, "end": 252.45}]}, {"start": 252.54, "end": 255.53, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 252.54, "end": 253.21}, {"text": "Radha", "start": 253.3, "end": 253.97}, {"text": "Radha", "start": 254.06, "end": 254.73}, {"text": "Radha", "start": 254.82, "end": 255.49}]}, {"start": 255.58, "end": 258.57, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 255.58, "end": 256.25}, {"text": "Radha", "start": 256.34, "end": 257.01}, {"text": "Radha", "start": 257.1, "end": 257.77}, {"text": "Radha", "start": 257.86, "end": 258.53}]}, {"start": 258.62, "end": 261.61, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 258.62, "end": 259.29}, {"text": "Radha", "start": 259.38, "end": 260.05}, {"text": "Radha", "start": 260.14, "end": 260.81}, {"text": "Radha", "start": 260.9, "end": 261.57}]}, {"start": 261.66, "end": 264.65, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 261.66, "end": 262.33}, {"text": "Radha", "start": 262.42, "end": 263.09}, {"text": "Radha", "start": 263.18, "end": 263.85}, {"text": "Radha", "start": 263.94, "end": 264.61}]}, {"start": 264.7, "end": 267.69, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 264.7, "end": 265.37}, {"text": "Radha", "start": 265.46, "end": 266.13}, {"text": "Radha", "start": 266.22, "end": 266.89}, {"text": "Radha", "start": 266.98, "end": 267.65}]}, {"start": 267.74, "end": 270.73, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 267.74, "end": 268.41}, {"text": "Radha", "start": 268.5, "end": 269.17}, {"text": "Radha", "start": 269.26, "end": 269.93}, {"text": "Radha", "start": 270.02, "end": 270.69}]}, {"start": 270.78, "end": 273.77, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 270.78, "end": 271.45}, {"text": "Radha", "start": 271.54, "end": 272.21}, {"text": "Radha", "start": 272.3, "end": 272.97}, {"text": "Radha", "start": 273.06, "end": 273.73}]}, {"start": 273.82, "end": 276.81, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 273.82, "end": 274.49}, {"text": "Radha", "start": 274.58, "end": 275.25}, {"text": "Radha", "start": 275.34, "end": 276.01}, {"text": "Radha", "start": 276.1, "end": 276.77}]}, {"start": 276.86, "end": 279.85, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 276.86, "end": 277.53}, {"text": "Radha", "start": 277.62, "end": 278.29}, {"text": "Radha", "start": 278.38, "end": 279.05}, {"text": "Radha", "start": 279.14, "end": 279.81}]}, {"start": 279.9, "end": 282.89, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 279.9, "end": 280.57}, {"text": "Radha", "start": 280.66, "end": 281.33}, {"text": "Radha", "start": 281.42, "end": 282.09}, {"text": "Radha", "start": 282.18, "end": 282.85}]}, {"start": 282.94, "end": 285.93, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 282.94, "end": 283.61}, {"text": "Radha", "start": 283.7, "end": 284.37}, {"text": "Radha", "start": 284.46, "end": 285.13}, {"text": "Radha", "start": 285.22, "end": 285.89}]}, {"start": 285.98, "end": 288.97, "text": "Radha Radha Radha Radha", "words": [{"text": "Radha", "start": 285.98, "end": 286.65}, {"text": "Radha", "start": 286.74, "end": 287.41}, {"text": "Radha", "start": 287.5, "end": 288.17}, {"text": "Radha", "start": 288.26, "end": 288.93}]}, {"start": 289.02, "end": 291.0, "text": "Radha Radha Radha", "words": [{"text": "Radha", "start": 289.02, "end": 289.69}, {"text": "Radha", "start": 289.78, "end": 290.45}, {"text": "Radha", "start": 290.54, "end": 291.0}]}];
 const TRIM_START=191.0;
 const BAKED_LAG=0.48;
-const ORIG_SRC='Braj_Ras_from_311.mp3?v=352';
-const MIX_SRC='Braj_Ras_from_311_karaoke_mix.mp3?v=352';
+const ORIG_SRC='Braj_Ras_from_311.mp3?v=353';
+const MIX_SRC='Braj_Ras_from_311_karaoke_mix.mp3?v=353';
 const PRE_JAAP_LAG=0.10;
 const HOLD=0.40;
 const audioOrig=document.getElementById('audioOrig'),audioMix=document.getElementById('audioMix');
@@ -150,6 +155,8 @@ const btnKaraokeMode=document.getElementById('btnKaraokeMode');
 let part8Mode='singalong';
 const flute=document.getElementById('flute');
 const fluteWrap=document.getElementById('fluteWrap');
+const appRoot=document.querySelector('.app');
+const backBtn=document.getElementById('backBtn');
 const instagramOrig=document.getElementById('instagramOrig'),instagramMix=document.getElementById('instagramMix');
 let instagram=instagramOrig;
 const btnPart2Singalong=document.getElementById('btnPart2Singalong');
@@ -180,6 +187,16 @@ function setActiveBtn(id){
     const el=document.getElementById(x);
     if(el) el.classList.toggle('on', x===id);
   });
+}
+function enterPlayerView(){
+  if(appRoot) appRoot.classList.add('playing');
+}
+function exitPlayerView(){
+  chainMode=false;
+  stopAllMedia();
+  hideFlute(); hideInstagram(); hideSecond(); hideYtFd7(); hideFirst(); hidePreJaap(); hideJaap(); hideKaraoke();
+  setActiveBtn('');
+  if(appRoot) appRoot.classList.remove('playing');
 }
 function stopAllMedia(){
   try{flute.pause();}catch(e){}
@@ -232,41 +249,49 @@ function hideKaraoke(){
   karaokeWrap.style.display='none';
 }
 function showOnlyFlute(){
+  enterPlayerView();
   hideInstagram(); hideSecond(); hideYtFd7(); hideFirst(); hidePreJaap(); hideJaap(); hideKaraoke();
   fluteWrap.classList.add('show');
   fluteWrap.style.display='flex';
 }
 function showOnlyInstagram(){
+  enterPlayerView();
   hideFlute(); hideSecond(); hideYtFd7(); hideFirst(); hidePreJaap(); hideJaap(); hideKaraoke();
   instagramWrap.classList.add('show');
   instagramWrap.style.display='flex';
 }
 function showOnlySecond(){
+  enterPlayerView();
   hideFlute(); hideInstagram(); hideYtFd7(); hideFirst(); hidePreJaap(); hideJaap(); hideKaraoke();
   secondWrap.classList.add('show');
   secondWrap.style.display='flex';
 }
 function showOnlyYtFd7(){
+  enterPlayerView();
   hideFlute(); hideInstagram(); hideSecond(); hideFirst(); hidePreJaap(); hideJaap(); hideKaraoke();
   ytFd7Wrap.classList.add('show');
   ytFd7Wrap.style.display='flex';
 }
 function showOnlyFirst(){
+  enterPlayerView();
   hideFlute(); hideInstagram(); hideSecond(); hideYtFd7(); hidePreJaap(); hideJaap(); hideKaraoke();
   firstWrap.classList.add('show');
   firstWrap.style.display='flex';
 }
 function showOnlyPreJaap(){
+  enterPlayerView();
   hideFlute(); hideInstagram(); hideSecond(); hideYtFd7(); hideFirst(); hideJaap(); hideKaraoke();
   preJaapWrap.classList.add('show');
   preJaapWrap.style.display='flex';
 }
 function showOnlyJaap(){
+  enterPlayerView();
   hideFlute(); hideInstagram(); hideSecond(); hideYtFd7(); hideFirst(); hidePreJaap(); hideKaraoke();
   jaapWrap.classList.add('show');
   jaapWrap.style.display='flex';
 }
 function showOnlyKaraoke(){
+  enterPlayerView();
   hideFlute(); hideInstagram(); hideSecond(); hideYtFd7(); hideFirst(); hidePreJaap(); hideJaap();
   karaokeWrap.classList.remove('hide');
   karaokeWrap.style.display='flex';
@@ -730,12 +755,14 @@ function startAll(){
   karaokeReady=false;
   setActiveBtn('startBtn');
   stopAllMedia();
+  enterPlayerView();
   hideInstagram(); hideSecond(); hideYtFd7(); hideFirst(); hidePreJaap(); hideJaap(); hideKaraoke();
   fluteWrap.classList.add('show');
   fluteWrap.style.display='flex';
   flute.currentTime=0;
   flute.play().catch(()=>showInstagram(true));
 }
+if(backBtn) backBtn.addEventListener('click', exitPlayerView);
 document.getElementById('btnPart1').addEventListener('click',playPart1);
 document.getElementById('btnPart2').addEventListener('click',playPart2);
 document.getElementById('btnPart3').addEventListener('click',playPart3);
