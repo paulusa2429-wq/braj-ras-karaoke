@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shalini Gulati Mashup v51-20260816171226</title>
+<title>Shalini Gulati Mashup v52-20260816171436</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <script>
 (function(){
-  var EMBED='51';
+  var EMBED='52';
   var want=(location.search.match(/[?&]v=(\d+)/)||[])[1]||EMBED;
   var have=(document.title.match(/v(\d+)/)||[])[1];
   if(have===want) return;
@@ -33,6 +33,7 @@ h1{margin:0 0 6px;text-align:center;font-size:clamp(1.1rem,3.5vw,1.35rem);font-w
 #lyrics .w{display:inline-block;padding:0 .12em;margin:0 .04em;border-radius:6px}
 #lyrics .w.active{color:#ffd700;background:rgba(255,215,0,.18)}
 audio{width:100%;margin:0;border-radius:12px}
+audio.audio-hidden{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;clip:rect(0,0,0,0);overflow:hidden}
 #time{display:none}
 </style></head><body>
 <div class="app">
@@ -45,9 +46,9 @@ audio{width:100%;margin:0;border-radius:12px}
   <button id="btn-inst" type="button">No Vocals</button>
 </div>
 <div id="lyrics"><span style="color:#888">♪ 0:29 se lyrics ♪</span></div>
-<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=51"></audio>
-<audio id="audioKaraoke" controls playsinline webkit-playsinline preload="auto" src="karaoke_mix.mp3?v=51" style="display:none"></audio>
-<audio id="audioInst" controls playsinline webkit-playsinline preload="auto" src="instrumental.mp3?v=51" style="display:none"></audio>
+<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=52"></audio>
+<audio id="audioKaraoke" controls playsinline webkit-playsinline preload="auto" src="karaoke_mix.mp3?v=52" class="audio-hidden"></audio>
+<audio id="audioInst" controls playsinline webkit-playsinline preload="auto" src="instrumental.mp3?v=52" class="audio-hidden"></audio>
 <div id="time" aria-hidden="true"></div>
 </div>
 </div>
@@ -130,6 +131,11 @@ function pauseAllAtEnd(){
     try{el.pause(); el.currentTime=CLIP_END;}catch(e){}
   });
 }
+function showTrack(next){
+  audioOrig.classList.toggle('audio-hidden', next!=='vocals');
+  audioKaraoke.classList.toggle('audio-hidden', next!=='karaoke');
+  audioInst.classList.toggle('audio-hidden', next!=='instrumental');
+}
 function setMode(next){
   if(next===mode) return;
   const prev=activeAudio(mode);
@@ -141,16 +147,10 @@ function setMode(next){
   btnK.classList.toggle('active', next==='karaoke');
   btnI.classList.toggle('active', next==='instrumental');
   a=activeAudio(next);
-  audioOrig.style.display=next==='vocals'?'':'none';
-  audioKaraoke.style.display=next==='karaoke'?'':'none';
-  audioInst.style.display=next==='instrumental'?'':'none';
-  const resume=()=>{
-    syncAll(t);
-    tick();
-    if(playing) a.play().catch(()=>{});
-  };
-  if(a.readyState>=2) resume();
-  else a.addEventListener('loadeddata', resume, {once:true});
+  showTrack(next);
+  syncAll(t);
+  tick();
+  if(playing) a.play().catch(()=>{});
 }
 function wireAudio(el){
   el.addEventListener('timeupdate',()=>{
@@ -180,7 +180,9 @@ btnV.addEventListener('click',()=>setMode('vocals'));
 btnK.addEventListener('click',()=>setMode('karaoke'));
 btnI.addEventListener('click',()=>setMode('instrumental'));
 wireAudio(audioOrig); wireAudio(audioKaraoke); wireAudio(audioInst);
+[audioOrig,audioKaraoke,audioInst].forEach(function(el){ el.preload='auto'; });
 let raf=0; function loop(){tick(); if(!a.paused&&!a.ended) raf=requestAnimationFrame(loop);}
 a.addEventListener('loadedmetadata',tick);
+showTrack('vocals');
 tick();
 </script></body></html>
