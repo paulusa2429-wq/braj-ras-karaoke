@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shalini Gulati Mashup v54-20260816172549</title>
+<title>Shalini Gulati Mashup v55-20260816172725</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <script>
 (function(){
-  var EMBED='54';
+  var m=location.pathname.match(/\/v(\d+)\.html$/);
+  if(m&&parseInt(m[1],10)<55){ location.replace('v55.html'+location.search); return; }
+  var EMBED='55';
   var want=(location.search.match(/[?&]v=(\d+)/)||[])[1]||EMBED;
   var have=(document.title.match(/v(\d+)/)||[])[1];
   if(have===want) return;
@@ -33,14 +35,17 @@ h1{margin:0 0 6px;text-align:center;font-size:clamp(1.1rem,3.5vw,1.35rem);font-w
 #lyrics{text-align:center;padding:26px 18px;margin:0 0 12px;line-height:2.15;font-size:clamp(1.25rem,3.8vw,1.95rem);min-height:3.4em;color:#f8f8fc;font-weight:600;background:rgba(0,0,0,.28);border:1px solid rgba(255,215,0,.14);border-radius:16px}
 #lyrics .w{display:inline-block;padding:0 .12em;margin:0 .04em;border-radius:6px}
 #lyrics .w.active{color:#ffd700;background:rgba(255,215,0,.18)}
-.play-btn{width:100%;margin:0 0 12px;padding:14px 16px;border:none;border-radius:14px;background:linear-gradient(135deg,#ffe066,#ffc107);color:#151515;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 6px 20px rgba(255,193,7,.35)}
+.play-btn{width:100%;margin:0 0 10px;padding:16px 16px;border:none;border-radius:14px;background:linear-gradient(135deg,#ffe066,#ffc107);color:#151515;font-size:1.05rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 6px 20px rgba(255,193,7,.35)}
 .play-btn:active{transform:scale(.98)}
-audio{width:100%;margin:0;border-radius:12px;display:block;min-height:48px}
+.transport{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+#clock{text-align:center;color:#b8b8c8;font-size:.86rem;font-variant-numeric:tabular-nums}
+#seek{width:100%;accent-color:#ffc107;height:28px}
+#player{position:fixed;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
 #time{display:none}
 </style></head><body>
 <div class="app">
 <h1>Shalini Gulati — Krishna Bhajans Mashup</h1>
-<p class="note"><a href="https://www.youtube.com/watch?v=lhW-zCglivg" target="_blank" rel="noopener">YouTube source</a> · full 6:20</p>
+<p class="note"><a href="https://www.youtube.com/watch?v=lhW-zCglivg" target="_blank" rel="noopener">YouTube source</a> · full 6:20 · <b>v55</b></p>
 <div class="player-card">
 <div class="mode-switch">
   <button id="btn-vocals" class="active" type="button">Sing-along</button>
@@ -49,7 +54,11 @@ audio{width:100%;margin:0;border-radius:12px;display:block;min-height:48px}
 </div>
 <div id="lyrics"><span style="color:#888">♪ 0:29 se lyrics ♪</span></div>
 <button id="playBtn" class="play-btn" type="button">▶ Play Mashup</button>
-<audio id="player" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=54"></audio>
+<div class="transport">
+  <span id="clock">0:00 / 6:20</span>
+  <input id="seek" type="range" min="0" max="380.0" step="0.1" value="0" aria-label="Seek">
+</div>
+<audio id="player" playsinline webkit-playsinline preload="auto"></audio>
 <div id="time" aria-hidden="true"></div>
 </div>
 </div>
@@ -59,14 +68,24 @@ const instCues=[{"start": 28.5, "end": 34.23, "text": "श्री कृष्
 const TUNE_GAPS=[[0.0, 29.0], [119.5, 129.8], [225.56, 228.22], [239.45, 245.05], [323.0, 324.6], [359.85, 371.25]];
 const INTRO=29.0;
 const CLIP_END=380.0;
-const SRC={vocals:'vocals.mp3?v=54',karaoke:'karaoke_mix.mp3?v=54',instrumental:'instrumental.mp3?v=54'};
+const SRC={vocals:'vocals.mp3?v=55',karaoke:'karaoke_mix.mp3?v=55',instrumental:'instrumental.mp3?v=55'};
 const player=document.getElementById('player');
 const ly=document.getElementById('lyrics');
 const playBtn=document.getElementById('playBtn');
+const clock=document.getElementById('clock');
+const seek=document.getElementById('seek');
 const btnV=document.getElementById('btn-vocals');
 const btnK=document.getElementById('btn-karaoke');
 const btnI=document.getElementById('btn-inst');
 let mode='vocals';
+let seeking=false;
+function fmt(t){return Math.floor(t/60)+':'+(String(Math.floor(t%60)).padStart(2,'0'));}
+function updateClock(){
+  const t=player.currentTime||0;
+  const d=player.duration&&isFinite(player.duration)?player.duration:CLIP_END;
+  if(clock) clock.textContent=fmt(t)+' / '+fmt(d);
+  if(seek&&!seeking&&Math.abs(parseFloat(seek.value)-t)>0.25) seek.value=String(t);
+}
 function cueList(){return mode==='instrumental'?instCues:cues;}
 function inTune(t){return TUNE_GAPS.some(g=>t>=g[0]&&t<=g[1]);}
 function findCue(t){
@@ -97,7 +116,8 @@ function renderCue(c,t){
 }
 function tick(){
   const t=player.currentTime||0;
-  if(t>=CLIP_END){ try{player.pause(); player.currentTime=CLIP_END;}catch(e){} }
+  if(t>=CLIP_END){ try{player.pause(); player.currentTime=CLIP_END; if(playBtn) playBtn.textContent='▶ Play Mashup';}catch(e){} }
+  updateClock();
   if(t<INTRO||inTune(t)){
     ly.innerHTML='<span style="color:#888;font-size:1.2rem">♪ tune ♪</span>';
     ly.style.color='#888';
@@ -110,9 +130,11 @@ function tick(){
 function resumeAt(t,playing){
   const seek=Math.min(Math.max(0,t||0),CLIP_END);
   const go=function(){
+    player.muted=false;
+    player.volume=1.0;
     try{player.currentTime=seek;}catch(e){}
     tick();
-    if(playing) player.play().catch(function(){});
+    if(playing) player.play().then(function(){ if(playBtn) playBtn.textContent='⏸ Pause'; }).catch(function(){});
   };
   if(player.readyState>=1) go();
   else player.addEventListener('loadedmetadata',go,{once:true});
@@ -121,6 +143,7 @@ function setMode(next){
   if(next===mode) return;
   const t=player.currentTime||0, playing=!player.paused;
   try{player.pause();}catch(e){}
+  if(playBtn) playBtn.textContent='▶ Play Mashup';
   mode=next;
   btnV.classList.toggle('active', next==='vocals');
   btnK.classList.toggle('active', next==='karaoke');
@@ -129,24 +152,39 @@ function setMode(next){
   player.load();
   resumeAt(t,playing);
 }
-function startPlay(){
-  try{ if(player.readyState<2) player.load(); }catch(e){}
-  player.play().catch(function(){});
-  cancelAnimationFrame(raf);
-  loop();
+function togglePlay(){
+  player.muted=false;
+  player.volume=1.0;
+  if(!player.src){ player.src=SRC[mode]; player.load(); }
+  if(player.paused){
+    try{ if(player.readyState<2) player.load(); }catch(e){}
+    player.play().then(function(){ if(playBtn) playBtn.textContent='⏸ Pause'; }).catch(function(){});
+    cancelAnimationFrame(raf);
+    loop();
+  }else{
+    player.pause();
+    if(playBtn) playBtn.textContent='▶ Play Mashup';
+  }
 }
 let raf=0;
 function loop(){tick(); if(!player.paused&&!player.ended) raf=requestAnimationFrame(loop);}
-player.addEventListener('play',function(){ cancelAnimationFrame(raf); loop(); });
-player.addEventListener('pause',function(){ cancelAnimationFrame(raf); });
+player.addEventListener('play',function(){ if(playBtn) playBtn.textContent='⏸ Pause'; cancelAnimationFrame(raf); loop(); });
+player.addEventListener('pause',function(){ if(playBtn) playBtn.textContent='▶ Play Mashup'; cancelAnimationFrame(raf); });
 player.addEventListener('timeupdate',tick);
 player.addEventListener('seeked',tick);
 player.addEventListener('loadedmetadata',tick);
+if(seek){
+  seek.addEventListener('input',function(){ seeking=true; try{ player.currentTime=parseFloat(seek.value)||0; tick(); }catch(e){} });
+  seek.addEventListener('change',function(){ seeking=false; });
+}
 btnV.addEventListener('click',function(){ setMode('vocals'); });
 btnK.addEventListener('click',function(){ setMode('karaoke'); });
 btnI.addEventListener('click',function(){ setMode('instrumental'); });
-if(playBtn) playBtn.addEventListener('click',startPlay);
-if(ly) ly.addEventListener('click',startPlay);
+if(playBtn) playBtn.addEventListener('click',togglePlay);
+if(ly) ly.addEventListener('click',togglePlay);
+player.src=SRC.vocals;
+player.muted=false;
+player.volume=1.0;
 try{ player.preload='auto'; player.load(); }catch(e){}
 tick();
 </script></body></html>
