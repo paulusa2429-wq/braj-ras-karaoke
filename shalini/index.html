@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shalini Gulati Mashup v52-20260816171436</title>
+<title>Shalini Gulati Mashup v53-20260816172144</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <script>
 (function(){
-  var EMBED='52';
+  var EMBED='53';
   var want=(location.search.match(/[?&]v=(\d+)/)||[])[1]||EMBED;
   var have=(document.title.match(/v(\d+)/)||[])[1];
   if(have===want) return;
   var url=location.pathname+'?v='+want+'&_nc='+Date.now();
   fetch(url,{cache:'no-store'}).then(function(r){return r.text();}).then(function(html){
-    if(html.indexOf('v'+want)>=0){ history.replaceState(null,'',url); document.open();document.write(html);document.close(); }
+    if(html.indexOf('Mashup v'+want+'-')>=0){ history.replaceState(null,'',url); document.open();document.write(html);document.close(); }
     else location.replace(url);
   }).catch(function(){ location.replace(url); });
 })();
@@ -23,7 +23,8 @@ body{margin:0;min-height:100vh;background:linear-gradient(165deg,#080810 0%,#121
 h1{margin:0 0 6px;text-align:center;font-size:clamp(1.1rem,3.5vw,1.35rem);font-weight:800;background:linear-gradient(92deg,#ffe566,#ffd700,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .note{color:#8a8aa8;font-size:.78rem;margin:0 0 14px;text-align:center}
 .note a{color:#ffd700}
-.player-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:18px 16px;box-shadow:0 12px 40px rgba(0,0,0,.35);backdrop-filter:blur(10px)}
+.player-card{position:relative;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:18px 16px;box-shadow:0 12px 40px rgba(0,0,0,.35);backdrop-filter:blur(10px)}
+.audio-stack{position:relative;width:100%;min-height:54px}
 .mode-switch{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:4px;margin:0 0 14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,215,0,.22);border-radius:999px}
 .mode-switch button{flex:1 1 28%;min-width:108px;border:none;background:transparent;color:#ccc;padding:11px 10px;font-size:.82rem;font-weight:700;cursor:pointer;border-radius:999px;transition:background .15s,color .15s}
 .mode-switch button.active{background:linear-gradient(135deg,#ffe066,#ffc107);color:#151515;box-shadow:0 4px 16px rgba(255,193,7,.35)}
@@ -32,8 +33,8 @@ h1{margin:0 0 6px;text-align:center;font-size:clamp(1.1rem,3.5vw,1.35rem);font-w
 #lyrics{text-align:center;padding:26px 18px;margin:0 0 12px;line-height:2.15;font-size:clamp(1.25rem,3.8vw,1.95rem);min-height:3.4em;color:#f8f8fc;font-weight:600;background:rgba(0,0,0,.28);border:1px solid rgba(255,215,0,.14);border-radius:16px}
 #lyrics .w{display:inline-block;padding:0 .12em;margin:0 .04em;border-radius:6px}
 #lyrics .w.active{color:#ffd700;background:rgba(255,215,0,.18)}
-audio{width:100%;margin:0;border-radius:12px}
-audio.audio-hidden{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;clip:rect(0,0,0,0);overflow:hidden}
+audio{width:100%;margin:0;border-radius:12px;display:block}
+audio.audio-hidden{position:fixed;left:-9999px;top:0;width:1px;height:1px;margin:0;opacity:0;visibility:hidden;pointer-events:none;clip:rect(0,0,0,0);overflow:hidden}
 #time{display:none}
 </style></head><body>
 <div class="app">
@@ -46,9 +47,11 @@ audio.audio-hidden{position:absolute;width:1px;height:1px;opacity:0;pointer-even
   <button id="btn-inst" type="button">No Vocals</button>
 </div>
 <div id="lyrics"><span style="color:#888">♪ 0:29 se lyrics ♪</span></div>
-<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=52"></audio>
-<audio id="audioKaraoke" controls playsinline webkit-playsinline preload="auto" src="karaoke_mix.mp3?v=52" class="audio-hidden"></audio>
-<audio id="audioInst" controls playsinline webkit-playsinline preload="auto" src="instrumental.mp3?v=52" class="audio-hidden"></audio>
+<div class="audio-stack">
+<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=53"></audio>
+<audio id="audioKaraoke" playsinline webkit-playsinline preload="auto" src="karaoke_mix.mp3?v=53" class="audio-hidden"></audio>
+<audio id="audioInst" playsinline webkit-playsinline preload="auto" src="instrumental.mp3?v=53" class="audio-hidden"></audio>
+</div>
 <div id="time" aria-hidden="true"></div>
 </div>
 </div>
@@ -132,9 +135,35 @@ function pauseAllAtEnd(){
   });
 }
 function showTrack(next){
-  audioOrig.classList.toggle('audio-hidden', next!=='vocals');
-  audioKaraoke.classList.toggle('audio-hidden', next!=='karaoke');
-  audioInst.classList.toggle('audio-hidden', next!=='instrumental');
+  const on={vocals:audioOrig,karaoke:audioKaraoke,instrumental:audioInst}[next]||audioOrig;
+  [audioOrig,audioKaraoke,audioInst].forEach(function(el){
+    const active=el===on;
+    el.classList.toggle('audio-hidden',!active);
+    el.controls=active;
+  });
+  if(next!=='karaoke'){ try{audioOrig.muted=false;}catch(e){} }
+}
+function syncKaraokeClock(playing){
+  if(mode!=='karaoke') return;
+  const t=audioKaraoke.currentTime||0;
+  try{
+    audioOrig.muted=true;
+    if(Math.abs((audioOrig.currentTime||0)-t)>0.02) audioOrig.currentTime=t;
+    if(playing) audioOrig.play().catch(function(){});
+    else audioOrig.pause();
+  }catch(e){}
+}
+function startActivePlayback(t){
+  const seek=Math.min(Math.max(0,t||0),CLIP_END);
+  syncAll(seek);
+  a=activeAudio(mode);
+  if(mode==='karaoke'){
+    try{audioKaraoke.muted=false; audioKaraoke.currentTime=seek;}catch(e){}
+    syncKaraokeClock(true);
+    return audioKaraoke.play().catch(function(){});
+  }
+  if(mode==='vocals'){ try{audioOrig.muted=false; audioOrig.currentTime=seek;}catch(e){} }
+  return a.play().catch(function(){});
 }
 function setMode(next){
   if(next===mode) return;
@@ -150,39 +179,47 @@ function setMode(next){
   showTrack(next);
   syncAll(t);
   tick();
-  if(playing) a.play().catch(()=>{});
+  if(playing) startActivePlayback(t);
 }
 function wireAudio(el){
   el.addEventListener('timeupdate',()=>{
     if(mode==='vocals' && el!==audioOrig) return;
     if(mode==='karaoke' && el!==audioKaraoke) return;
     if(mode==='instrumental' && el!==audioInst) return;
+    if(mode==='karaoke' && el===audioKaraoke) syncKaraokeClock(true);
     if(lyricTime()>=CLIP_END){ pauseAllAtEnd(); }
     tick();
   });
   el.addEventListener('seeked',()=>{
     if((mode==='vocals'&&el===audioOrig)||(mode==='karaoke'&&el===audioKaraoke)||(mode==='instrumental'&&el===audioInst)){
       syncAll(el.currentTime||0);
+      if(mode==='karaoke') syncKaraokeClock(!audioKaraoke.paused);
       tick();
     }
   });
   el.addEventListener('play',()=>{
     if((mode==='vocals'&&el===audioOrig)||(mode==='karaoke'&&el===audioKaraoke)||(mode==='instrumental'&&el===audioInst)){
+      if(mode==='karaoke') syncKaraokeClock(true);
       cancelAnimationFrame(raf);
       loop();
     }
   });
   el.addEventListener('pause',()=>{
     if(el===a) cancelAnimationFrame(raf);
+    if(mode==='karaoke' && el===audioKaraoke) syncKaraokeClock(false);
   });
 }
 btnV.addEventListener('click',()=>setMode('vocals'));
 btnK.addEventListener('click',()=>setMode('karaoke'));
 btnI.addEventListener('click',()=>setMode('instrumental'));
 wireAudio(audioOrig); wireAudio(audioKaraoke); wireAudio(audioInst);
-[audioOrig,audioKaraoke,audioInst].forEach(function(el){ el.preload='auto'; });
+[audioOrig,audioKaraoke,audioInst].forEach(function(el){
+  if(!el) return;
+  el.preload='auto';
+  try{ if(el.readyState<2) el.load(); }catch(e){}
+});
 let raf=0; function loop(){tick(); if(!a.paused&&!a.ended) raf=requestAnimationFrame(loop);}
-a.addEventListener('loadedmetadata',tick);
+[audioOrig,audioKaraoke,audioInst].forEach(function(el){ if(el) el.addEventListener('loadedmetadata',tick); });
 showTrack('vocals');
 tick();
 </script></body></html>
