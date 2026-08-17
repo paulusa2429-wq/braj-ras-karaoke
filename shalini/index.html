@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shalini Gulati Mashup v53-20260816172144</title>
+<title>Shalini Gulati Mashup v54-20260816172549</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <script>
 (function(){
-  var EMBED='53';
+  var EMBED='54';
   var want=(location.search.match(/[?&]v=(\d+)/)||[])[1]||EMBED;
   var have=(document.title.match(/v(\d+)/)||[])[1];
   if(have===want) return;
@@ -33,8 +33,9 @@ h1{margin:0 0 6px;text-align:center;font-size:clamp(1.1rem,3.5vw,1.35rem);font-w
 #lyrics{text-align:center;padding:26px 18px;margin:0 0 12px;line-height:2.15;font-size:clamp(1.25rem,3.8vw,1.95rem);min-height:3.4em;color:#f8f8fc;font-weight:600;background:rgba(0,0,0,.28);border:1px solid rgba(255,215,0,.14);border-radius:16px}
 #lyrics .w{display:inline-block;padding:0 .12em;margin:0 .04em;border-radius:6px}
 #lyrics .w.active{color:#ffd700;background:rgba(255,215,0,.18)}
-audio{width:100%;margin:0;border-radius:12px;display:block}
-audio.audio-hidden{position:fixed;left:-9999px;top:0;width:1px;height:1px;margin:0;opacity:0;visibility:hidden;pointer-events:none;clip:rect(0,0,0,0);overflow:hidden}
+.play-btn{width:100%;margin:0 0 12px;padding:14px 16px;border:none;border-radius:14px;background:linear-gradient(135deg,#ffe066,#ffc107);color:#151515;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 6px 20px rgba(255,193,7,.35)}
+.play-btn:active{transform:scale(.98)}
+audio{width:100%;margin:0;border-radius:12px;display:block;min-height:48px}
 #time{display:none}
 </style></head><body>
 <div class="app">
@@ -47,11 +48,8 @@ audio.audio-hidden{position:fixed;left:-9999px;top:0;width:1px;height:1px;margin
   <button id="btn-inst" type="button">No Vocals</button>
 </div>
 <div id="lyrics"><span style="color:#888">♪ 0:29 se lyrics ♪</span></div>
-<div class="audio-stack">
-<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=53"></audio>
-<audio id="audioKaraoke" playsinline webkit-playsinline preload="auto" src="karaoke_mix.mp3?v=53" class="audio-hidden"></audio>
-<audio id="audioInst" playsinline webkit-playsinline preload="auto" src="instrumental.mp3?v=53" class="audio-hidden"></audio>
-</div>
+<button id="playBtn" class="play-btn" type="button">▶ Play Mashup</button>
+<audio id="player" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=54"></audio>
 <div id="time" aria-hidden="true"></div>
 </div>
 </div>
@@ -61,37 +59,16 @@ const instCues=[{"start": 28.5, "end": 34.23, "text": "श्री कृष्
 const TUNE_GAPS=[[0.0, 29.0], [119.5, 129.8], [225.56, 228.22], [239.45, 245.05], [323.0, 324.6], [359.85, 371.25]];
 const INTRO=29.0;
 const CLIP_END=380.0;
-const audioOrig=document.getElementById('audioOrig');
-const audioKaraoke=document.getElementById('audioKaraoke');
-const audioInst=document.getElementById('audioInst');
-let a=audioOrig;
+const SRC={vocals:'vocals.mp3?v=54',karaoke:'karaoke_mix.mp3?v=54',instrumental:'instrumental.mp3?v=54'};
+const player=document.getElementById('player');
 const ly=document.getElementById('lyrics');
+const playBtn=document.getElementById('playBtn');
 const btnV=document.getElementById('btn-vocals');
 const btnK=document.getElementById('btn-karaoke');
 const btnI=document.getElementById('btn-inst');
 let mode='vocals';
-function activeAudio(m){
-  if(m==='karaoke') return audioKaraoke;
-  if(m==='instrumental') return audioInst;
-  return audioOrig;
-}
 function cueList(){return mode==='instrumental'?instCues:cues;}
-function fmt(t){return Math.floor(t/60)+':'+(String(Math.floor(t%60)).padStart(2,'0'));}
 function inTune(t){return TUNE_GAPS.some(g=>t>=g[0]&&t<=g[1]);}
-function syncAll(t){
-  const x=Math.min(Math.max(0,t||0),CLIP_END);
-  try{audioOrig.currentTime=x;}catch(e){}
-  try{audioKaraoke.currentTime=x;}catch(e){}
-  try{audioInst.currentTime=x;}catch(e){}
-}
-function lyricTime(){
-  if(mode==='instrumental') return audioInst.currentTime||0;
-  if(mode==='karaoke'){
-    const kt=audioKaraoke.currentTime||0;
-    try{ if(Math.abs((audioOrig.currentTime||0)-kt)>0.02) audioOrig.currentTime=kt; }catch(e){}
-  }
-  return audioOrig.currentTime||0;
-}
 function findCue(t){
   if(t<INTRO||inTune(t)) return null;
   const list=cueList();
@@ -119,7 +96,8 @@ function renderCue(c,t){
   }).join(' ');
 }
 function tick(){
-  const t=lyricTime();
+  const t=player.currentTime||0;
+  if(t>=CLIP_END){ try{player.pause(); player.currentTime=CLIP_END;}catch(e){} }
   if(t<INTRO||inTune(t)){
     ly.innerHTML='<span style="color:#888;font-size:1.2rem">♪ tune ♪</span>';
     ly.style.color='#888';
@@ -129,97 +107,46 @@ function tick(){
     else{ ly.innerHTML='<span style="color:#666;font-size:1.2rem">♪</span>'; ly.style.color='#666'; }
   }
 }
-function pauseAllAtEnd(){
-  [audioOrig,audioKaraoke,audioInst].forEach(el=>{
-    try{el.pause(); el.currentTime=CLIP_END;}catch(e){}
-  });
-}
-function showTrack(next){
-  const on={vocals:audioOrig,karaoke:audioKaraoke,instrumental:audioInst}[next]||audioOrig;
-  [audioOrig,audioKaraoke,audioInst].forEach(function(el){
-    const active=el===on;
-    el.classList.toggle('audio-hidden',!active);
-    el.controls=active;
-  });
-  if(next!=='karaoke'){ try{audioOrig.muted=false;}catch(e){} }
-}
-function syncKaraokeClock(playing){
-  if(mode!=='karaoke') return;
-  const t=audioKaraoke.currentTime||0;
-  try{
-    audioOrig.muted=true;
-    if(Math.abs((audioOrig.currentTime||0)-t)>0.02) audioOrig.currentTime=t;
-    if(playing) audioOrig.play().catch(function(){});
-    else audioOrig.pause();
-  }catch(e){}
-}
-function startActivePlayback(t){
+function resumeAt(t,playing){
   const seek=Math.min(Math.max(0,t||0),CLIP_END);
-  syncAll(seek);
-  a=activeAudio(mode);
-  if(mode==='karaoke'){
-    try{audioKaraoke.muted=false; audioKaraoke.currentTime=seek;}catch(e){}
-    syncKaraokeClock(true);
-    return audioKaraoke.play().catch(function(){});
-  }
-  if(mode==='vocals'){ try{audioOrig.muted=false; audioOrig.currentTime=seek;}catch(e){} }
-  return a.play().catch(function(){});
+  const go=function(){
+    try{player.currentTime=seek;}catch(e){}
+    tick();
+    if(playing) player.play().catch(function(){});
+  };
+  if(player.readyState>=1) go();
+  else player.addEventListener('loadedmetadata',go,{once:true});
 }
 function setMode(next){
   if(next===mode) return;
-  const prev=activeAudio(mode);
-  const t=lyricTime()||(prev.currentTime||0), playing=!prev.paused;
-  try{prev.pause();}catch(e){}
-  try{audioOrig.pause(); audioKaraoke.pause(); audioInst.pause();}catch(e){}
+  const t=player.currentTime||0, playing=!player.paused;
+  try{player.pause();}catch(e){}
   mode=next;
   btnV.classList.toggle('active', next==='vocals');
   btnK.classList.toggle('active', next==='karaoke');
   btnI.classList.toggle('active', next==='instrumental');
-  a=activeAudio(next);
-  showTrack(next);
-  syncAll(t);
-  tick();
-  if(playing) startActivePlayback(t);
+  player.src=SRC[next];
+  player.load();
+  resumeAt(t,playing);
 }
-function wireAudio(el){
-  el.addEventListener('timeupdate',()=>{
-    if(mode==='vocals' && el!==audioOrig) return;
-    if(mode==='karaoke' && el!==audioKaraoke) return;
-    if(mode==='instrumental' && el!==audioInst) return;
-    if(mode==='karaoke' && el===audioKaraoke) syncKaraokeClock(true);
-    if(lyricTime()>=CLIP_END){ pauseAllAtEnd(); }
-    tick();
-  });
-  el.addEventListener('seeked',()=>{
-    if((mode==='vocals'&&el===audioOrig)||(mode==='karaoke'&&el===audioKaraoke)||(mode==='instrumental'&&el===audioInst)){
-      syncAll(el.currentTime||0);
-      if(mode==='karaoke') syncKaraokeClock(!audioKaraoke.paused);
-      tick();
-    }
-  });
-  el.addEventListener('play',()=>{
-    if((mode==='vocals'&&el===audioOrig)||(mode==='karaoke'&&el===audioKaraoke)||(mode==='instrumental'&&el===audioInst)){
-      if(mode==='karaoke') syncKaraokeClock(true);
-      cancelAnimationFrame(raf);
-      loop();
-    }
-  });
-  el.addEventListener('pause',()=>{
-    if(el===a) cancelAnimationFrame(raf);
-    if(mode==='karaoke' && el===audioKaraoke) syncKaraokeClock(false);
-  });
+function startPlay(){
+  try{ if(player.readyState<2) player.load(); }catch(e){}
+  player.play().catch(function(){});
+  cancelAnimationFrame(raf);
+  loop();
 }
-btnV.addEventListener('click',()=>setMode('vocals'));
-btnK.addEventListener('click',()=>setMode('karaoke'));
-btnI.addEventListener('click',()=>setMode('instrumental'));
-wireAudio(audioOrig); wireAudio(audioKaraoke); wireAudio(audioInst);
-[audioOrig,audioKaraoke,audioInst].forEach(function(el){
-  if(!el) return;
-  el.preload='auto';
-  try{ if(el.readyState<2) el.load(); }catch(e){}
-});
-let raf=0; function loop(){tick(); if(!a.paused&&!a.ended) raf=requestAnimationFrame(loop);}
-[audioOrig,audioKaraoke,audioInst].forEach(function(el){ if(el) el.addEventListener('loadedmetadata',tick); });
-showTrack('vocals');
+let raf=0;
+function loop(){tick(); if(!player.paused&&!player.ended) raf=requestAnimationFrame(loop);}
+player.addEventListener('play',function(){ cancelAnimationFrame(raf); loop(); });
+player.addEventListener('pause',function(){ cancelAnimationFrame(raf); });
+player.addEventListener('timeupdate',tick);
+player.addEventListener('seeked',tick);
+player.addEventListener('loadedmetadata',tick);
+btnV.addEventListener('click',function(){ setMode('vocals'); });
+btnK.addEventListener('click',function(){ setMode('karaoke'); });
+btnI.addEventListener('click',function(){ setMode('instrumental'); });
+if(playBtn) playBtn.addEventListener('click',startPlay);
+if(ly) ly.addEventListener('click',startPlay);
+try{ player.preload='auto'; player.load(); }catch(e){}
 tick();
 </script></body></html>
