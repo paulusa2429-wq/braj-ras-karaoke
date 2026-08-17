@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shalini Gulati Mashup v48-20260816165843</title>
+<title>Shalini Gulati Mashup v49-20260816170358</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <script>
 (function(){
-  var EMBED='48';
+  var EMBED='49';
   var want=(location.search.match(/[?&]v=(\d+)/)||[])[1]||EMBED;
   var have=(document.title.match(/v(\d+)/)||[])[1];
   if(have===want) return;
@@ -45,9 +45,9 @@ audio{width:100%;margin:0;border-radius:12px}
   <button id="btn-inst" type="button">No Vocals</button>
 </div>
 <div id="lyrics"><span style="color:#888">♪ 0:29 se lyrics ♪</span></div>
-<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=48"></audio>
-<audio id="audioKaraoke" controls playsinline webkit-playsinline preload="auto" src="karaoke_mix.mp3?v=48" style="display:none"></audio>
-<audio id="audioInst" controls playsinline webkit-playsinline preload="auto" src="instrumental.mp3?v=48" style="display:none"></audio>
+<audio id="audioOrig" controls playsinline webkit-playsinline preload="auto" src="vocals.mp3?v=49"></audio>
+<audio id="audioKaraoke" controls playsinline webkit-playsinline preload="auto" src="karaoke_mix.mp3?v=49" style="display:none"></audio>
+<audio id="audioInst" controls playsinline webkit-playsinline preload="auto" src="instrumental.mp3?v=49" style="display:none"></audio>
 <div id="time" aria-hidden="true"></div>
 </div>
 </div>
@@ -124,9 +124,13 @@ function setMode(next){
   audioOrig.style.display=next==='vocals'?'':'none';
   audioKaraoke.style.display=next==='karaoke'?'':'none';
   audioInst.style.display=next==='instrumental'?'':'none';
-  try{a.currentTime=Math.min(t,CLIP_END);}catch(e){}
-  tick();
-  if(playing) a.play().catch(()=>{});
+  const resume=()=>{
+    try{a.currentTime=Math.min(t,CLIP_END);}catch(e){}
+    tick();
+    if(playing) a.play().catch(()=>{});
+  };
+  if(a.readyState>=2) resume();
+  else a.addEventListener('loadeddata', resume, {once:true});
 }
 function wireAudio(el){
   el.addEventListener('timeupdate',()=>{
